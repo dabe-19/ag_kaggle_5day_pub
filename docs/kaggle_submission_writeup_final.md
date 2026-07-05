@@ -10,6 +10,19 @@
 
 ## The Problem
 
+### My Personal Motivation
+
+I have long noticed an issue when it comes to participating in virtual communities. The attention, interaction, and energy gravitates towards a few, consolidated hubs, leaving the vast majority of gamers looking to share their time and experiences isolated and streaming to empty lobbies.
+
+My friends, family members, and even myself have at somepoint thought live-streaming a favorite game of ours would be a great way to engage with the broader community also playing that game, possibly forming connections amongst a shared interest. However, even our friends that were watching streamers at the time would gravitate towards those large central hubs where all of the action was. This left a broader landscape unexplored, and I believe does a detriment to organic, healthy, digital community growth.
+
+I thought, what if, instead, we could build a system that would leverage those gravity-well streamers to connect the vast, latent machine of micro-streamers operating with a similar vibe and profile. These interactions wouldn't have to last hours, just maybe 5 to 10 minutes, but what if you could make another micro-streamer's night that much more enjoyable with a an action-packed channel raid, scripted for you to provide maximum engagement and algorithmic value for that other streamer? How would you feel if a small group of friends raided your channel to do the same?!
+
+That's the excitement I felt when considering this project and how we can leverage these new tools to build better communities, where more people show up to support each other's passions and creativity!
+
+
+### The Technical Hurdles
+
 Streamers face a persistent strategic problem: **deciding what to stream**. The landscape shifts hourly — viewer counts spike and crash, games trend overnight, and the difference between a 10-viewer and a 10,000-viewer stream comes down to choosing the right game at the right time. Existing tools show raw numbers but offer no *actionable intelligence*. Streamers can't easily answer: which games have high demand relative to streamer supply? How does my channel profile map to specific audiences? What does today's gaming news mean for tonight's stream?
 
 For **micro-streamers** — channels under a few hundred viewers — the problem runs deeper. It is not only strategic isolation from real-time data; it is *community isolation*. A micro-streamer with 20 concurrent viewers rarely discovers that 30 other channels share nearly identical chat rhythms, play the same games at the same hours, and orbit the same bellwether influencers. That latent community exists in the data; it simply has no interface to find itself.

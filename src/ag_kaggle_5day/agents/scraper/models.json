@@ -1,0 +1,174 @@
+{
+  "report_model": "gemma-4-26b-a4b-it",
+  "report_chain": [
+    "gemma-4-26b-a4b-it",
+    "gemma-4-31b-it",
+    "gemini-3.1-flash-lite",
+    "gemini-3.5-flash"
+  ],
+  "default_model": "gemma-4-26b-a4b-it",
+  "default_chain": [
+    "gemma-4-26b-a4b-it",
+    "gemma-4-31b-it",
+    "gemini-3.1-flash-lite",
+    "gemini-3.5-flash",
+    "gemini-2.5-flash"
+  ],
+  "affiliate_model": "gemma-4-31b-it",
+  "affiliate_chain": [
+    "gemma-4-31b-it",
+    "gemma-4-26b-a4b-it",
+    "gemini-3.1-flash-lite"
+  ],
+  "expose_model": "gemma-4-26b-a4b-it",
+  "expose_chain": [
+    "gemini-3.5-flash",
+    "gemma-4-31b-it",
+    "gemma-4-26b-a4b-it"
+  ],
+  "editor_model": "gemma-4-26b-a4b-it",
+  "editor_chain": [
+    "gemma-4-31b-it",
+    "gemma-4-26b-a4b-it",
+    "gemini-3.1-flash-lite",
+    "gemini-3.5-flash"
+  ],
+  "refinement_model": "gemma-4-26b-a4b-it",
+  "refinement_chain": [
+    "gemini-3.5-flash",
+    "gemma-4-31b-it",
+    "gemma-4-26b-a4b-it",
+    "gemini-3.1-flash-lite"
+  ],
+  "sentiment_model": "gemma-4-31b-it",
+  "sentiment_chain": [
+    "gemma-4-31b-it",
+    "gemma-4-26b-a4b-it",
+    "gemini-3.1-flash-lite",
+    "gemini-3.5-flash",
+    "gemini-2.5-flash"
+  ],
+  "available_models": [
+    {
+      "id": "gemma-4-31b-it",
+      "name": "Gemma 4 31B"
+    },
+    {
+      "id": "gemma-4-26b-a4b-it",
+      "name": "Gemma 4 A4B-it"
+    },
+    {
+      "id": "gemini-3.1-flash-lite",
+      "name": "Gemini 3.1 Flash Lite"
+    },
+    {
+      "id": "gemini-3.5-flash",
+      "name": "Gemini 3.5 Flash"
+    },
+    {
+      "id": "gemini-2.5-flash",
+      "name": "Gemini 2.5 Flash"
+    }
+  ],
+  "timeouts": {
+    "gemini-deep-research-pro-preview": 300,
+    "gemini-3.5-flash": 120,
+    "gemini-2.5-flash": 120,
+    "gemini-3.1-flash-lite": 120,
+    "gemma-4-31b-it": 300,
+    "gemma-4-26b-a4b-it": 300
+  },
+  "sponsored_games": [
+    {
+      "title": "Minecraft",
+      "category": "Sandbox",
+      "avg_viewers": 125000,
+      "avg_length_hours": 3.2,
+      "score": 92
+    },
+    {
+      "title": "Elden Ring",
+      "category": "RPG",
+      "avg_viewers": 85000,
+      "avg_length_hours": 4.5,
+      "score": 88
+    },
+    {
+      "title": "VALORANT",
+      "category": "FPS",
+      "avg_viewers": 140000,
+      "avg_length_hours": 2.8,
+      "score": 95
+    },
+    {
+      "title": "Hades II",
+      "category": "Roguelike",
+      "avg_viewers": 45000,
+      "avg_length_hours": 3.8,
+      "score": 82
+    },
+    {
+      "title": "League of Legends",
+      "category": "MOBA",
+      "avg_viewers": 210000,
+      "avg_length_hours": 3.5,
+      "score": 96
+    },
+    {
+      "title": "Grand Theft Auto V",
+      "category": "Action-Adventure",
+      "avg_viewers": 115000,
+      "avg_length_hours": 4.1,
+      "score": 90
+    }
+  ],
+  "enable_affiliate_playbook": true,
+  "affiliate_products": [
+    {
+      "name": "Elgato Stream Deck MK.2",
+      "type": "hardware",
+      "benefit": "Allows launching sound effects, toggling game scenes, and controlling chat integration with one touch.",
+      "link": "https://amzn.to/example-stream-deck",
+      "price": "$149.99"
+    },
+    {
+      "name": "Shure SM7B Vocal Microphone",
+      "type": "hardware",
+      "benefit": "Delivers warm, broadcast-quality audio profile to stand out in crowded competitive chat rooms.",
+      "link": "https://amzn.to/example-shure-sm7b",
+      "price": "$399.00"
+    },
+    {
+      "name": "Razer Kiyo Pro Webcam",
+      "type": "hardware",
+      "benefit": "Uncompressed 1080p 60FPS video with high-performance light sensor for retro neon lighting environments.",
+      "link": "https://amzn.to/example-kiyo-pro",
+      "price": "$99.99"
+    }
+  ],
+  "editors_pick": {
+    "title": "Forza Horizon 6",
+    "category": "Racing",
+    "avg_viewers": 35000,
+    "avg_length_hours": 3.5,
+    "score": 85
+  },
+  "archetype_thresholds": {
+    "Cozy_Social_Interactive": {
+      "velocity_multiplier": 1.5,
+      "volatility_threshold": 0.50
+    },
+    "Highly_Competitive_Sweat": {
+      "velocity_multiplier": 3.0,
+      "volatility_threshold": 0.85
+    },
+    "Variety_Entertainment": {
+      "velocity_multiplier": 2.5,
+      "volatility_threshold": 0.80
+    },
+    "Informational_Guide": {
+      "velocity_multiplier": 2.0,
+      "volatility_threshold": 0.60
+    }
+  }
+}

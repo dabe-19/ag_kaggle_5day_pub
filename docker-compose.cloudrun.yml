@@ -1,0 +1,40 @@
+# docker-compose.cloudrun.yml — Cloud Run multi-container deployment
+#
+# This file is used for:
+#   1. Local simulation of the Cloud Run environment:
+#        docker compose -f docker-compose.cloudrun.yml up
+#   2. Direct Cloud Run deployment (gcloud CLI):
+#        gcloud run compose up --project $GCP_PROJECT
+#
+# Prerequisites:
+#   - Build and push the app image first:
+#       docker build -t gcr.io/$GCP_PROJECT/streamer-advisor:$IMAGE_TAG .
+#       docker push gcr.io/$GCP_PROJECT/streamer-advisor:$IMAGE_TAG
+#   - GCP_PROJECT and IMAGE_TAG must be set in environment or .env
+#
+# Important Cloud Run differences from local compose:
+#   - TLS is terminated by Google's load balancer — no ssl_* directives in nginx
+#   - Containers in the same instance share localhost (not Docker service names)
+#   - Cloud Run expects a container to listen on $PORT (default 8080); nginx handles it
+#   - Max 1 instance by default with gcloud run compose (scale via Cloud Run console)
+
+services:
+  app:
+    # Image must be in a registry accessible to Cloud Run (GCR or Artifact Registry)
+    image: gcr.io/${GCP_PROJECT}/streamer-advisor:${IMAGE_TAG:-latest}
+    container_name: streamer_advisor_app
+    # Internal port only — nginx proxies to localhost:8000 in Cloud Run
+    expose:
+      - "8000"
+    env_file: .env
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: streamer_advisor_nginx
+    # Cloud Run routes external traffic to this port
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./docker/nginx/nginx.cloudrun.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app

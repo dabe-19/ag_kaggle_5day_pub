@@ -1,0 +1,77 @@
+[project]
+name = "ag-kaggle-5day"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "dabe-19",email = "djmccabe87@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.14, <4.0"
+dependencies = [
+    "fastapi (>=0.137.1,<0.138.0)",
+    "uvicorn (>=0.49.0,<0.50.0)",
+    "google-genai (>=2.8.0,<3.0.0)",
+    "requests (>=2.34.2,<3.0.0)",
+    "beautifulsoup4 (>=4.15.0,<5.0.0)",
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "google-api-python-client (>=2.150.0,<3.0.0)",
+    "filelock (>=3.16.0,<4.0.0)",
+    "httpx[http2] (>=0.28.0,<1.0.0)",
+    "google-adk (>=2.3.0,<3.0.0)",
+    "sqlalchemy (>=2.0.0,<3.0.0)",
+    "google-cloud-bigquery (>=3.42.0,<4.0.0)",
+    "google-cloud-firestore (>=2.27.0,<4.0.0)",
+    "google-cloud-aiplatform (>=1.158.0,<2.0.0)",
+    "cryptography (>=49.0.0,<50.0.0)",
+    "numpy (>=2.0.0)",
+    "pandas (>=2.0.0, !=3.0.4)",
+    "scikit-learn (>=1.6.0,<2.0.0)",
+    "pydantic-settings (>=2.14.2,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+[tool.poetry.scripts]
+start = "ag_kaggle_5day.main:start"
+cron-refresh = "ag_kaggle_5day.cron:main"
+
+[[tool.poetry.packages]]
+include = "ag_kaggle_5day"
+from = "src"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.1.0,<10.0.0)",
+    "ruff (>=0.9.0,<1.0.0)"
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "BLE", "TRY", "ASYNC", "PLW", "TID"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/ag_kaggle_5day/security.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/workflow_init.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/streamers.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/auth.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/app.py" = ["BLE", "TRY", "PLW"]
+"src/ag_kaggle_5day/logging_config.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/cron.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/games.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/monitoring.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/pages.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/admin.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/recommend.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/matchmaker.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/articles.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/routes/news.py" = ["BLE", "TRY"]
+"src/ag_kaggle_5day/agents/**/*.py" = ["BLE", "TRY", "PLW"]
+"src/ag_kaggle_5day/advisor_agent/**/*.py" = ["BLE", "TRY", "PLW"]
+"tests/**/*.py" = ["BLE", "TRY"]
+
+

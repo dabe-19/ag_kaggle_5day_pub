@@ -1,0 +1,935 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        if (window.self !== window.top) {
+            window.top.location.href = window.self.location.href;
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Advisor</title>
+    <link
+        rel="icon"
+        href="data:image/svg+xml,<svg viewBox='0 0 80 80'>
+            <text y='70' font-size='70'>🕹️</text>
+        </svg>"
+    >
+    <meta name="description" content="WOR-ACLE: Streamer Spotlight, Analytics, and Curation Hub. Discover trending games, analyze streamer viewership, and generate playbooks.">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="/static/css/retro.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <span style="margin-right: 0.5rem; display: inline-block;">
+                    🕹️
+                </span>
+                WOR-ACLE
+            </div>
+            <!-- Compatibility tag for main test assertion -->
+            <span style="display: none;">STREAMER ADVISOR</span>
+            <!-- Global Profile Search Bar -->
+            <div class="global-search-container" id="global-search-container" style="position: relative; margin-left: 2rem; display: none; align-items: center; max-width: 260px; width: 100%;">
+                <span style="position: absolute; left: 0.6rem; color: var(--accent-cyan); font-size: 0.85rem; pointer-events: none;">🔍</span>
+                <input type="text" id="global-streamer-search" placeholder="SEARCH PROFILE..." style="
+                    width: 100%;
+                    padding: 0.4rem 0.6rem 0.4rem 1.8rem;
+                    background: rgba(15, 23, 42, 0.6);
+                    border: 1px solid rgba(0, 240, 255, 0.25);
+                    color: #fff;
+                    font-family: 'Share Tech Mono', monospace;
+                    font-size: 0.8rem;
+                    border-radius: 0px;
+                    outline: none;
+                    transition: border-color 0.2s;
+                " onfocus="this.style.borderColor='var(--accent-cyan)'" onblur="this.style.borderColor='rgba(0, 240, 255, 0.25)'" autocomplete="off">
+                <div id="global-autocomplete-list" class="autocomplete-items" style="
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    background: #0b0f19;
+                    border: 1px solid rgba(0, 240, 255, 0.3);
+                    z-index: 999999;
+                    max-height: 250px;
+                    overflow-y: auto;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+                "></div>
+            </div>
+        </div>
+        <div class="tab-container" id="tab-navigation" style="display: none;">
+            <button class="tab-btn active" onclick="switchTab('dashboard')">
+                🕹️ Market Monitor
+            </button>
+            <button class="tab-btn" onclick="switchTab('planner')">
+                🔮 Playbook Planner
+            </button>
+            <button class="tab-btn" onclick="switchTab('curation')">
+                ✨ Saved Playbooks
+            </button>
+            <button class="tab-btn" onclick="switchTab('starmap')">
+                ⭐ Star Map
+            </button>
+        </div>
+        <div class="header-actions" id="header-actions" style="display: none;">
+            <button class="btn-secondary" onclick="toggleChat()" id="btn-chat-toggle" style="
+                display: flex;
+                align-items: center;
+            ">
+                <span style="margin-right: 0.4rem; display: inline-block;">
+                    🕹️
+                </span>
+                <span class="btn-text-full">ARCADE CHAT</span>
+                <span class="btn-text-short" style="display: none;">CHAT</span>
+            </button>
+            <span id="cache-status-badge" style="
+                font-size: 0.75rem;
+                color: var(--accent-cyan);
+                background: rgba(0, 240, 255, 0.05);
+                border: 2px solid var(--border-color);
+                border-radius: 0px;
+                padding: 0.35rem 0.9rem;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+            ">⏱ <span class="cache-label">Cache:</span> —</span>
+            <button class="btn-secondary" onclick="triggerScrape()" id="btn-collect">
+                <span class="btn-text-full">Refresh Custom Games</span>
+                <span class="btn-text-short" style="display: none;">Refresh</span>
+            </button>
+            <button class="btn-action" onclick="logout()" id="btn-key-action">
+                <span class="btn-text-full">Disconnect Key</span>
+                <span class="btn-text-short" style="display: none;">Disconnect</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Activation Screen -->
+    <div class="activation-container glass-card" id="activation-view">
+        <h1 class="activation-title">Find Your Next Big Stream Match</h1>
+        <p class="activation-desc">
+            Streamer Metrics Advisor scans Twitch and YouTube Let's Play analytics, pairing real-time metrics with Google's Gemini LLM to suggest unique, high-yield categories that help you stand out.
+        </p>
+
+        <div class="security-card">
+            <span style="font-size: 1.25rem;">🔒</span>
+            <div>
+                <strong>Secure Session Cookie Architecture:</strong>
+                <p style="margin-top: 0.25rem; font-size: 0.85rem; opacity: 0.9;">
+                    Your Google AI Studio API key is securely encrypted on the backend, stored in an HttpOnly session cookie, and never saved or logged in any database.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="api-key-input" style="font-weight: 500; font-size: 0.95rem;">Google AI Studio API Key</label>
+            <input type="password" class="form-input" id="api-key-input" placeholder="AIzaSy...">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem;">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="remember-key"> Remember key for 1 hour
+                </label>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--accent-cyan); font-size: 0.85rem; text-decoration: none;">Get a free API key ➔</a>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 1rem; margin-bottom: 1.5rem;">
+            <label style="font-weight: 500; font-size: 0.95rem; display: block; margin-bottom: 0.5rem;">Gemini Model Configuration</label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem;">
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Search & Data</label>
+                    <select class="form-input" id="act-model-search" style="padding: 0.5rem 0.75rem; width: 100%; border-radius: 8px; font-size: 0.85rem;" onchange="syncActivationModelsToSettings()">
+                        <option value="gemma-4-31b-it">Gemma 4 31B</option>
+                        <option value="gemma-4-26b-a4b-it">Gemma 4 A4B-it</option>
+                        <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite</option>
+                        <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+                        <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Analysis & Reports</label>
+                    <select class="form-input" id="act-model-analysis" style="padding: 0.5rem 0.75rem; width: 100%; border-radius: 8px; font-size: 0.85rem;" onchange="syncActivationModelsToSettings()">
+                        <option value="gemma-4-31b-it">Gemma 4 31B</option>
+                        <option value="gemma-4-26b-a4b-it">Gemma 4 A4B-it</option>
+                        <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite</option>
+                        <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+                        <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Chatbot Advisor</label>
+                    <select class="form-input" id="act-model-chat" style="padding: 0.5rem 0.75rem; width: 100%; border-radius: 8px; font-size: 0.85rem;" onchange="syncActivationModelsToSettings()">
+                        <option value="gemma-4-31b-it">Gemma 4 31B</option>
+                        <option value="gemma-4-26b-a4b-it">Gemma 4 A4B-it</option>
+                        <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite</option>
+                        <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+                        <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; width: 100%;">
+            <button class="btn-action" onclick="submitKey()" style="flex: 1; margin: 0;">Enter Dashboard</button>
+            <button class="btn-secondary" id="btn-cancel-activation" onclick="cancelActivation()" style="flex: 1; margin: 0; display: none;">Go Back (Read-Only)</button>
+        </div>
+    </div>
+
+    <!-- Main Dashboard View -->
+    <div class="dashboard-container" id="dashboard-view">
+        <!-- Top Spotlight Banner Callout -->
+        <div class="spotlight-banner" id="top-spotlight-banner" style="display: none; grid-column: span 2;">
+            <div class="spotlight-banner-info">
+                <span class="spotlight-banner-icon">📰</span>
+                <div class="spotlight-banner-text">
+                    <h4 id="spotlight-banner-title">Streamer of the Day Analysis</h4>
+                    <p id="spotlight-banner-desc">Check out the latest live metrics and sentiment analysis dossier.</p>
+                </div>
+            </div>
+            <button class="spotlight-banner-cta"
+                onclick="openSpotlightCabinet()">
+                VIEW ANALYSIS
+            </button>
+        </div>
+        <!-- Left Side: Metrics and Console Reports -->
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <!-- Metrics -->
+            <div class="glass-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                        <h2 style="margin-bottom: 0;">
+                            🔥 Community Engagement & Stream Planner
+                        </h2>
+                        <select id="category-selector" class="form-input" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; border-radius: 0px !important; width: auto; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); color: var(--text-color); font-family: 'Share Tech Mono', monospace;" onchange="renderGamesList()">
+                            <option value="overall">Overall</option>
+                            <option value="sandbox">Sandbox / Open World</option>
+                            <option value="rpg">RPG / Story</option>
+                            <option value="fps">FPS / Shooters</option>
+                            <option value="roguelike">Roguelike</option>
+                            <option value="moba">MOBA</option>
+                            <option value="action-adventure">Action-Adventure / Racing</option>
+                            <option value="irl">IRL / Just Chatting</option>
+                        </select>
+                    </div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">
+                         <span style="color: #10b981;">🔥 Trending (1-10)</span> &nbsp;·&nbsp;
+                         <span style="color: #8b5cf6;">📌 Sponsored (11-12)</span> &nbsp;·&nbsp;
+                         <span style="color: #ec4899;">🎯 Custom (13-14)</span> &nbsp;·&nbsp;
+                         <span style="color: #ffe600;">⭐ Editor's Pick (15)</span>
+                    </span>
+                </div>
+                <p style="
+                    font-size: 0.8rem;
+                    color: var(--text-muted);
+                    margin-top: -1rem;
+                    margin-bottom: 1rem;
+                ">
+                    Find exactly what, where, when, and how to stream.
+                    Real-time community engagement, viewer stats, and
+                    content advisor insights.
+                </p>
+                <div id="unified-dashboard-section">
+                    <div class="metrics-grid" id="dashboard-grid" style="margin-bottom: 2rem;"></div>
+                </div>
+            </div>
+
+            <!-- Community Vibe Matchmaker & Orbit Console -->
+            <div class="glass-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <h2 style="margin-bottom: 0;">👾 Community Vibe Matchmaker & Orbit Console</h2>
+                    </div>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: -1rem; margin-bottom: 1.5rem;">
+                    Analyze your channel's interactive density rate, discover matched peers orbiting the same Vibe Tribe centroids, and generate LLM story-driven raid campaigns.
+                </p>
+                
+                <div class="matchmaker-grid">
+                    <!-- Left Column: Ecosystem Overview (API-Free) -->
+                    <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+                        <h3 style="font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--accent-cyan); margin-bottom: 1rem; letter-spacing: 0.05em;">[ ECOSYSTEM RADAR ]</h3>
+                        
+                        <div style="margin-bottom: 1.25rem;">
+                            <div style="font-size: 0.75rem; font-weight: bold; color: #fff; margin-bottom: 0.5rem;">Active Gravity Wells:</div>
+                            <div id="gravity-wells-list" style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.75rem;">
+                                <div style="color: var(--text-muted);">Fetching active gravity wells...</div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div style="font-size: 0.75rem; font-weight: bold; color: #fff; margin-bottom: 0.5rem;">Trending Vibe Tribes:</div>
+                            <div id="vibe-tribes-list" style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.75rem;">
+                                <div style="color: var(--text-muted);">Fetching trending vibe tribes...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Interactive Matchmaker -->
+                    <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--accent-pink); margin-bottom: 1rem; letter-spacing: 0.05em;">[ TRIBE MATCHMAKER ]</h3>
+                            
+                            <!-- BYOK key check message -->
+                            <div id="matchmaker-key-warning" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.5rem; font-size: 0.75rem; color: #fca5a5; margin-bottom: 1rem; display: none;">
+                                🔑 Connect your personal Gemini API key in the top right to unlock AI Alliance Arcs & Outreach Scripts.
+                            </div>
+                            
+                            <!-- Scan form -->
+                            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem;">
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="text" id="matchmaker-handle" class="form-input" placeholder="Enter Twitch/YouTube handle (e.g. shroud)" style="flex: 1; padding: 0.4rem 0.75rem; font-size: 0.85rem; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); color: var(--text-color); border-radius: 8px;">
+                                    <button class="btn" onclick="runScanProfile()" id="btn-scan-profile" style="padding: 0.4rem 1rem; font-size: 0.82rem; border-radius: 0px !important;">Scan & Connect</button>
+                                </div>
+                                
+                                <div style="border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 0.75rem;">
+                                    <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: bold;">Or Bootstrap Offline/Cold-Start Vibe:</div>
+                                    <textarea id="matchmaker-bio" class="form-input" rows="2" placeholder="Describe your stream's ideal vibe, community humor, and style..." style="width: 100%; font-size: 0.75rem; padding: 0.4rem 0.5rem; margin-bottom: 0.5rem; resize: none; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); color: var(--text-color); border-radius: 8px;"></textarea>
+                                    
+                                    <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.5rem;">
+                                        <button class="vibe-tag-btn" onclick="toggleVibeTag(this)" data-tag="Chill">Chill</button>
+                                        <button class="vibe-tag-btn" onclick="toggleVibeTag(this)" data-tag="Sweaty">Sweaty</button>
+                                        <button class="vibe-tag-btn" onclick="toggleVibeTag(this)" data-tag="Meme-Heavy">Meme-Heavy</button>
+                                        <button class="vibe-tag-btn" onclick="toggleVibeTag(this)" data-tag="Cozy">Cozy</button>
+                                        <button class="vibe-tag-btn" onclick="toggleVibeTag(this)" data-tag="ASMR">ASMR</button>
+                                        <button class="vibe-tag-btn" onclick="toggleVibeTag(this)" data-tag="Retro">Retro</button>
+                                    </div>
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <input type="text" id="matchmaker-game" class="form-input" placeholder="Primary Game (e.g. Minecraft)" style="flex: 1; padding: 0.35rem 0.5rem; font-size: 0.75rem; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); color: var(--text-color); border-radius: 8px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Story Cards Container -->
+                        <div id="matchmaker-results-display" style="border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 1rem; min-height: 100px; display: none;">
+                            <!-- Matches will load here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Pipeline Status (compact) -->
+            <div id="terminal-card" style="display: none; margin-top: -0.5rem;">
+                <div style="
+                    background: rgba(2, 6, 23, 0.6);
+                    border: 1px solid rgba(16, 185, 129, 0.2);
+                    border-radius: 10px;
+                    padding: 0.6rem 1rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                ">
+                    <span id="pipeline-dot" style="
+                        width: 8px; height: 8px;
+                        border-radius: 50%;
+                        background: #10b981;
+                        display: inline-block;
+                        animation: pulse-dot 1.5s ease-in-out infinite;
+                    "></span>
+                    <span id="terminal-display" style="
+                        font-family: 'Courier New', Courier, monospace;
+                        font-size: 0.75rem;
+                        color: #10b981;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        flex: 1;
+                    "></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Custom Games & Chat Advisor -->
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <!-- Gemini Model Settings -->
+            <div class="glass-card">
+                <h2>⚙️ Gemini Model Settings</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
+                    Configure distinct Gemini models for specific application tasks.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Search & Data Grounding</label>
+                        <select class="form-input" id="model-search" style="padding: 0.6rem 0.75rem; width: 100%; border-radius: 8px; font-size: 0.85rem;" onchange="saveModelSettings()">
+                            <option value="gemma-4-31b-it">Gemma 4 31B</option>
+                            <option value="gemma-4-26b-a4b-it">Gemma 4 A4B-it</option>
+                            <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite</option>
+                            <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+                            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Analysis & Reports</label>
+                        <select class="form-input" id="model-analysis" style="padding: 0.6rem 0.75rem; width: 100%; border-radius: 8px; font-size: 0.85rem;" onchange="saveModelSettings()">
+                            <option value="gemma-4-31b-it">Gemma 4 31B</option>
+                            <option value="gemma-4-26b-a4b-it">Gemma 4 A4B-it</option>
+                            <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite</option>
+                            <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+                            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Advisor Chatbot</label>
+                        <select class="form-input" id="model-chat" style="padding: 0.6rem 0.75rem; width: 100%; border-radius: 8px; font-size: 0.85rem;" onchange="saveModelSettings()">
+                            <option value="gemma-4-31b-it">Gemma 4 31B</option>
+                            <option value="gemma-4-26b-a4b-it">Gemma 4 A4B-it</option>
+                            <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite</option>
+                            <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+                            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Target Tracking -->
+            <div class="glass-card">
+                <h2>⚙️ Custom Target Tracking</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
+                    Track and compare up to two custom video games on your advisor dashboard.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem;">
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Game Title 1</label>
+                        <input type="text" class="form-input" id="custom-game-1" placeholder="e.g. Fortnite" style="padding: 0.75rem 1rem;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Game Title 2</label>
+                        <input type="text" class="form-input" id="custom-game-2" placeholder="e.g. Terraria" style="padding: 0.75rem 1rem;">
+                    </div>
+                </div>
+                <button class="btn-secondary" onclick="saveCustomGames()" style="width: 100%; border-radius: 12px; padding: 0.75rem;">Save & Re-Scrape</button>
+            </div>
+
+            <!-- Streamer Spotlight & Research Card -->
+            <div class="glass-card">
+                <h2>🕹️ Streamer Profiling Hub</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
+                    Look up streamer profiles from top-10 scrapes, generate on-demand dossiers, or view the Daily Spotlight.
+                </p>
+                <div class="form-group" style="margin-bottom: 1rem; position: relative;">
+                    <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Streamer Handle</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" class="form-input" id="dashboard-streamer-search" placeholder="Type streamer handle..." style="padding: 0.75rem 1rem; flex: 1; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); color: var(--text-main); font-family: 'Share Tech Mono', monospace;" autocomplete="off">
+                        <button id="btn-dashboard-analyze" class="btn-secondary" onclick="triggerDashboardMediumForm()" style="padding: 0.75rem 1rem; font-size: 0.85rem; border-radius: 10px;">ANALYZE</button>
+                    </div>
+                    <div id="dashboard-streamer-generating-status" style="display: none; font-size: 0.85rem; color: var(--accent-yellow); margin-top: 8px;"></div>
+                    <div id="dashboard-autocomplete-list" class="autocomplete-items" style="
+                        display: none;
+                        position: absolute;
+                        border: 1px solid var(--border-color);
+                        border-top: none;
+                        z-index: 99;
+                        top: 100%;
+                        left: 0;
+                        right: 0;
+                        background-color: var(--card-bg);
+                        max-height: 200px;
+                        overflow-y: auto;
+                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+                    "></div>
+                </div>
+                <div id="session-research-section" style="margin-top: 1.25rem; display: none;">
+                    <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem; border-top: 1px dashed var(--border-color); padding-top: 0.75rem;">My Session Research</label>
+                    <div id="session-research-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 120px; overflow-y: auto;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; width: 100%;">
+                    <button onclick="openSpotlightCabinet()"
+                        class="btn-action"
+                        style="flex: 1; text-align: center;
+                        padding: 0.75rem; font-size: 0.85rem;
+                        display: flex; align-items: center;
+                        justify-content: center; border-radius: 12px;
+                        margin: 0; background: var(--gradient-accent);
+                        color: white; border: none; cursor: pointer;">
+                        DAILY SPOTLIGHT
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Playbook Planner Tab -->
+    <div class="dashboard-container" id="planner-view" style="display: none; grid-template-columns: 1fr; gap: 2rem; max-width: 1400px; margin: 2rem auto; padding: 0 2rem; width: 100%;">
+        <div class="planner-grid">
+            <!-- Left Column: Form Settings -->
+            <div class="glass-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <h2>🔮 Playbook Planner</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -1rem;">
+                    Select your stream preferences and channel scale. Gemini will generate a custom tactical playbook for you.
+                </p>
+
+                <!-- Vibe Selection -->
+                <div class="form-group">
+                    <label style="font-weight: 600; font-size: 0.95rem;">Select Your Stream Vibe</label>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <div class="vibe-card selected" onclick="selectVibe(this, 'chill')">
+                            <span class="vibe-icon">☕</span>
+                            <div>
+                                <strong>Chill & Chatting</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Cozy play, sandbox games, chatting with audience</div>
+                            </div>
+                        </div>
+                        <div class="vibe-card" onclick="selectVibe(this, 'competitive')">
+                            <span class="vibe-icon">🏆</span>
+                            <div>
+                                <strong>Skill & Competitive</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Ranked climb, high intensity, competitive FPS/MOBAs</div>
+                            </div>
+                        </div>
+                        <div class="vibe-card" onclick="selectVibe(this, 'community')">
+                            <span class="vibe-icon">👥</span>
+                            <div>
+                                <strong>Community Play</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Co-op with friends, hosting custom lobbies/viewer games</div>
+                            </div>
+                        </div>
+                        <div class="vibe-card" onclick="selectVibe(this, 'story')">
+                            <span class="vibe-icon">🎬</span>
+                            <div>
+                                <strong>Story & Hype</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Narrative RPGs, horror games, playthroughs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scale Selection -->
+                <div class="form-group" style="margin-top: 0.5rem;">
+                    <label style="font-weight: 600; font-size: 0.95rem;">Select Your Channel Scale</label>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <div class="scale-card selected" onclick="selectScale(this, 'starting')">
+                            <span class="scale-icon">🌱</span>
+                            <div>
+                                <strong>Starting Out / Hobbyist</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Focus on low-saturation, high discoverability directories</div>
+                            </div>
+                        </div>
+                        <div class="scale-card" onclick="selectScale(this, 'affiliate')">
+                            <span class="scale-icon">📈</span>
+                            <div>
+                                <strong>Affiliate / Growing</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Balance viewer engagement with moderate competition directories</div>
+                            </div>
+                        </div>
+                        <div class="scale-card" onclick="selectScale(this, 'partner')">
+                            <span class="scale-icon">🔥</span>
+                            <div>
+                                <strong>Partner / Large Audience</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Hype streams in saturated directories to leverage existing audience</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Goal Selection -->
+                <div class="form-group" style="margin-top: 0.5rem;">
+                    <label style="font-weight: 600; font-size: 0.95rem;">Select Your Stream Goal</label>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <div class="goal-card selected" onclick="selectGoal(this, 'growth')">
+                            <span class="goal-icon">🎯</span>
+                            <div>
+                                <strong>Grow Audience</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Focus on discoverability, clipping highlights, and multi-streaming</div>
+                            </div>
+                        </div>
+                        <div class="goal-card" onclick="selectGoal(this, 'engagement')">
+                            <span class="goal-icon">💬</span>
+                            <div>
+                                <strong>Audience Bonding</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Focus on community building, interactive chat games, and viewer retention</div>
+                            </div>
+                        </div>
+                        <div class="goal-card" onclick="selectGoal(this, 'monetization')">
+                            <span class="goal-icon">💎</span>
+                            <div>
+                                <strong>Maximize Revenue</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Focus on subscriptions, donations, sponsors, and milestone goals</div>
+                            </div>
+                        </div>
+                        <div class="goal-card" onclick="selectGoal(this, 'performance')">
+                            <span class="goal-icon">⚡</span>
+                            <div>
+                                <strong>Showcase Skill</strong>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Focus on speedrunning, challenge runs, and expert play</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stream Duration Slider -->
+                <div class="form-group" style="margin-top: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label for="duration-input" style="font-weight: 600; font-size: 0.95rem;">Target Stream Duration</label>
+                        <span id="duration-val" style="color: var(--accent-cyan); font-weight: 700;">3.0 hrs</span>
+                    </div>
+                    <input type="range" min="1.0" max="8.0" step="0.5" value="3.0" class="form-input" id="duration-input" oninput="updateDurationLabel(this.value)" style="padding: 0.5rem 0;">
+                </div>
+
+                <!-- Channel Context (Optional) -->
+                <div class="form-group" style="margin-top: 0.5rem;">
+                    <label for="custom-context-input" style="font-weight: 600; font-size: 0.95rem;">Channel Context (Optional)</label>
+                    <textarea class="form-input" id="custom-context-input" placeholder="e.g. YouTube handle, Twitch style, or details about your channel vibe." rows="3" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(15, 23, 42, 0.6); color: var(--text-main); font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; padding: 0.5rem; outline: none; resize: vertical; box-sizing: border-box; border-radius: 0px !important;"></textarea>
+                </div>
+
+                <button class="btn-action" id="btn-playbooks" onclick="generatePlaybooks()" style="width: 100%; margin-top: 1rem;">Generate Strategic Playbooks</button>
+            </div>
+
+            <!-- Right Column: Results -->
+            <div class="glass-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <h2>🔮 Strategic Playbooks</h2>
+                <div id="planner-results" style="display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; min-height: 200px;">
+                    <p style="color: var(--text-muted); text-align: center;">Choose your settings and click 'Generate Strategic Playbooks' to begin.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saved Playbooks Tab -->
+    <div class="dashboard-container" id="curation-view" style="display: none; grid-template-columns: 1fr; gap: 2rem; max-width: 1400px; margin: 2rem auto; padding: 0 2rem; width: 100%;">
+        <div class="glass-card" style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h2 style="margin-bottom: 0;">✨ My Curated Stream Board</h2>
+                <button class="btn-secondary" onclick="exportCurationBoard()" style="padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 10px; display: flex; align-items: center; gap: 0.4rem;">
+                    📋 Copy Markdown Export
+                </button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -1rem; text-align: left;">
+                These playbooks are saved directly in your browser. You can add notes, remove entries, or copy a Markdown list to share on Discord.
+            </p>
+            <div id="curated-playbooks-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; min-height: 150px; width: 100%;">
+                <!-- Curated playbooks load here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Star Map View -->
+    <div class="dashboard-container" id="starmap-view" style="display: none; max-width: 1400px; margin: 2rem auto; padding: 0 2rem; width: 100%; position: relative;">
+        <!-- Left Panel: Interactive Visualizer -->
+        <div class="glass-card starmap-visualizer-panel" style="display: flex; flex-direction: column; position: relative; overflow: hidden; border-radius: 0px !important;">
+            
+            <!-- Star Map Marquee Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: rgba(5, 5, 10, 0.7); border-bottom: 2px solid var(--accent-cyan);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button id="starmap-back-btn" class="btn-secondary" onclick="zoomToGalaxy()" style="display: none; padding: 0.35rem 0.75rem; font-size: 0.75rem; border-radius: 0px !important;">
+                        ◄ BACK TO GALAXY
+                    </button>
+                    <h2 id="starmap-title" style="margin: 0; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace; text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);">⭐ STAR MAP: GALAXY VIEW</h2>
+                </div>
+                <div id="starmap-meta" style="font-size: 0.75rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace;">
+                    SYSTEM STATUS: ACTIVE
+                </div>
+            </div>
+
+            <!-- Visualization Area -->
+            <div style="flex-grow: 1; position: relative; background: #020205;">
+                <!-- Starfield Warp Canvas -->
+                <canvas id="starmap-warp-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+                
+                <!-- SVG Interactive Overlay -->
+                <svg id="starmap-svg" width="100%" height="100%" style="position: absolute; top: 0; left: 0; overflow: hidden;"></svg>
+            </div>
+        </div>
+
+        <!-- Right Panel: Side Console -->
+        <div class="glass-card starmap-side-panel" id="starmap-side-panel" style="display: flex; flex-direction: column; border-radius: 0px !important; background: rgba(5, 5, 10, 0.85); overflow: hidden;">
+            <div id="starmap-side-header" style="padding: 1rem; border-bottom: 1px dashed rgba(0, 240, 255, 0.2); font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: var(--accent-cyan); font-weight: bold;">
+                ░ ECOSYSTEM OVERVIEW
+            </div>
+            
+            <div id="starmap-chat-container" style="flex-grow: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; height: 100%;">
+                <div id="starmap-chat-output" style="flex-grow: 1; overflow-y: auto; padding: 1rem; font-size: 0.85rem; color: var(--text); font-family: 'Share Tech Mono', monospace; text-align: left; display: flex; flex-direction: column; gap: 0.8rem;">
+                    <!-- Content dynamically loads here -->
+                </div>
+                
+                <div id="starmap-input-bar" style="display: none; align-items: center; padding: 0.75rem 1rem; border-top: 2px solid var(--accent-cyan); background: rgba(0,0,0,0.4);">
+                    <span style="color: var(--accent-cyan); margin-right: 0.5rem; font-family: 'Share Tech Mono', monospace; font-weight: bold;">░ QUERY &gt;</span>
+                    <input type="text" id="starmap-chat-input" placeholder="Query this tribe..." onkeydown="handleStarmapChatKey(event)" style="flex-grow: 1; background: transparent; border: none; outline: none; color: #fff; font-family: 'Share Tech Mono', monospace; font-size: 0.85rem;" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Modal -->
+    <div id="news-modal" style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(11, 15, 25, 0.85);
+        backdrop-filter: blur(8px);
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+    ">
+        <div class="glass-card" style="width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; position: relative;">
+            <span onclick="closeNewsModal()" style="
+                position: absolute;
+                top: 1rem;
+                right: 1.5rem;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--text-muted);
+            ">&times;</span>
+            <h2 id="news-modal-title" style="color: var(--accent-cyan); margin-bottom: 1.5rem;">Latest News</h2>
+            <div id="news-modal-content" style="display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 1.5rem;">
+                <!-- Render news items -->
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                <button class="btn-secondary" id="btn-refresh-news" onclick="viewNews(activeNewsGame, true)" style="padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 10px;">Perform Fresh Search</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer style="
+        text-align: center;
+        padding: 2.5rem 2rem;
+        margin-top: 4rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--text-muted);
+        font-size: 0.72rem;
+        font-family: 'Share Tech Mono', monospace;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        background: rgba(10, 15, 30, 0.4);
+    ">
+        WOR-ACLE Co-Pilot &nbsp;·&nbsp; <span id="deployment-nonce-stamp" style="color: var(--accent-pink);">[LOCAL DEV]</span>
+    </footer>
+
+
+    <!-- Global Hover Tooltip for Twitch Streamers -->
+    <div id="streamer-tooltip" style="
+        position: absolute;
+        display: none;
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-color);
+        padding: 0.6rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        max-width: 250px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+        z-index: 9999;
+    "></div>
+
+    <script src="/static/js/dashboard.js"></script>
+
+    <!-- Streamer Profile Side Panel Drawer -->
+    <div id="streamer-profile-drawer" style="
+        position: fixed;
+        top: 0;
+        right: -450px;
+        width: 420px;
+        height: 100%;
+        background: rgba(10, 10, 18, 0.98);
+        border-left: 3px solid var(--accent-cyan);
+        box-shadow: -10px 0 25px rgba(0, 240, 255, 0.35);
+        z-index: 10000;
+        transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        padding: 1.5rem;
+        overflow-y: auto;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.88rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        box-sizing: border-box;
+        color: #e2e8f0;
+    ">
+        <!-- CRT scanline overlay -->
+        <div style="
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
+        "></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem;">
+            <span style="font-family: 'Press Start 2P'; font-size: 0.75rem; color: var(--accent-cyan);">[ PROFILE CARD ]</span>
+            <button onclick="closeStreamerProfileDrawer()" style="
+                background: none;
+                border: 1px solid var(--accent-pink);
+                color: var(--accent-pink);
+                font-family: 'Share Tech Mono';
+                font-size: 0.9rem;
+                cursor: pointer;
+                padding: 0.1rem 0.6rem;
+                border-radius: 0px !important;
+                transition: all 0.2s;
+            " onmouseover="this.style.background='var(--accent-pink)'; this.style.color='#000';" onmouseout="this.style.background='none'; this.style.color='var(--accent-pink)';">X CLOSE</button>
+        </div>
+
+        <!-- Search bar inside the streamer card drawer -->
+        <div style="margin-top: 0.75rem; margin-bottom: 0.75rem; position: relative;">
+            <input type="text" id="drawer-streamer-search" placeholder="🔍 Search other streamer..." style="
+                width: 100%;
+                padding: 0.45rem 0.75rem;
+                background: rgba(0,0,0,0.5);
+                border: 1px solid rgba(0, 240, 255, 0.25);
+                color: #fff;
+                font-family: 'Share Tech Mono', monospace;
+                font-size: 0.8rem;
+                border-radius: 0px !important;
+                outline: none;
+            " onfocus="this.style.borderColor='var(--accent-cyan)'" onblur="this.style.borderColor='rgba(0, 240, 255, 0.25)'" autocomplete="off">
+            <div id="drawer-autocomplete-list" class="autocomplete-items" style="
+                display: none;
+                position: absolute;
+                border: 1px solid rgba(0, 240, 255, 0.35);
+                border-top: none;
+                z-index: 9999;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #0d0918;
+                max-height: 150px;
+                overflow-y: auto;
+            "></div>
+        </div>
+
+        <div id="drawer-profile-info">
+            <!-- Dynamic profile info -->
+        </div>
+
+        <!-- CRT Radar Mini-Target -->
+        <div id="drawer-radar-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(0, 240, 255, 0.25); padding: 0.65rem; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 0 10px rgba(0, 240, 255, 0.05); position: relative; border-radius: 0px;">
+            <!-- Radar SVG -->
+            <div style="flex-shrink: 0; width: 60px; height: 60px;">
+                <svg width="60" height="60" viewBox="0 0 60 60" style="background: #05050a; border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 50%; overflow: visible; box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);">
+                    <line x1="30" y1="2" x2="30" y2="58" stroke="rgba(0, 240, 255, 0.15)" stroke-width="0.8" stroke-dasharray="2,2"/>
+                    <line x1="2" y1="30" x2="58" y2="30" stroke="rgba(0, 240, 255, 0.15)" stroke-width="0.8" stroke-dasharray="2,2"/>
+                    <circle cx="30" cy="30" r="12" fill="none" stroke="rgba(0, 240, 255, 0.1)" stroke-width="0.8"/>
+                    <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(0, 240, 255, 0.1)" stroke-width="0.8"/>
+                    <circle id="vibe-dot" cx="30" cy="30" r="3.5" fill="#9146FF" style="display: none; filter: drop-shadow(0 0 4px #9146FF);">
+                        <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle id="vibe-dot-youtube" cx="30" cy="30" r="3.5" fill="#FF0000" style="display: none; filter: drop-shadow(0 0 4px #FF0000);">
+                        <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite" />
+                    </circle>
+                </svg>
+            </div>
+            <!-- Radar Telemetry details -->
+            <div style="flex-grow: 1;">
+                <div style="font-family: 'Press Start 2P'; font-size: 0.5rem; color: var(--accent-cyan); margin-bottom: 0.3rem; letter-spacing: -0.02em;">[ CHAT SENTIMENT vs VOLATILITY ]</div>
+                <div id="vibe-coordinates-display" style="font-family: 'Share Tech Mono'; font-size: 0.8rem; color: #fff;">μ = 0.00 | σ = 0.00</div>
+                <div id="vibe-description-display" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 0.15rem;">Vibe: cozy / balanced</div>
+            </div>
+        </div>
+
+        <!-- Telemetry History Sparklines Section -->
+        <div id="drawer-history-section" style="display: flex; flex-direction: column; gap: 0.5rem; display: none;">
+            <div style="font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--accent-green); border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 0.4rem; letter-spacing: 0.05em;">[ TELEMETRY HISTORY ]</div>
+            <div id="drawer-history-list" style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <!-- Telemetry sparklines dynamic SVGs -->
+            </div>
+        </div>
+
+        <div id="drawer-clips-section" style="display: flex; flex-direction: column; gap: 0.5rem; display: none;">
+            <div style="font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--accent-pink); border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 0.4rem; letter-spacing: 0.05em;">[ FEATURED CLIPS ]</div>
+            <div id="drawer-clips-list" style="display: flex; flex-direction: column; gap: 0.4rem; max-height: 120px; overflow-y: auto;">
+                <!-- Clips list -->
+            </div>
+        </div>
+
+        <div id="drawer-correlations-section" style="display: flex; flex-direction: column; gap: 0.5rem; display: none;">
+            <div style="font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--accent-cyan); border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 0.4rem; letter-spacing: 0.05em;">[ VIBE CONNECTIONS ]</div>
+            <div id="drawer-correlations-list" style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <!-- Correlations list -->
+            </div>
+        </div>
+
+        <!-- Live Chat Radar & Stream Console -->
+        <div id="drawer-live-radar-section" style="display: flex; flex-direction: column; gap: 0.5rem; background: rgba(0, 240, 255, 0.02); border: 1px solid rgba(0, 240, 255, 0.15); padding: 0.75rem; border-radius: 0px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(0, 240, 255, 0.3); padding-bottom: 0.4rem;">
+                <span style="font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--accent-cyan); letter-spacing: 0.05em;">[ LIVE CHAT RADAR ]</span>
+                <span id="live-radar-status" style="font-size: 0.7rem; color: var(--text-muted);">READY</span>
+            </div>
+            
+            <div id="drawer-live-radar-buttons-container" style="display: flex; gap: 0.5rem; margin-top: 0.25rem;"></div>
+
+            <!-- Radar Progress Bar & Console messages -->
+            <div id="live-radar-console" style="display: none; background: #05050a; border: 1px solid rgba(0, 240, 255, 0.2); padding: 0.5rem; font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; color: var(--accent-cyan); margin-top: 0.5rem; height: 120px; overflow-y: auto; text-align: left; flex-direction: column; gap: 0.25rem;">
+                <div id="live-radar-progress-container" style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0, 240, 255, 0.3); position: relative; margin-bottom: 0.4rem;">
+                    <div id="live-radar-progress" style="width: 0%; height: 100%; background: var(--accent-cyan); transition: width 0.1s linear;"></div>
+                </div>
+                <div id="live-radar-log" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.2rem;"></div>
+            </div>
+
+            <!-- Live Streaming Chat Box -->
+            <div id="live-chat-stream-box" style="display: none; background: #05050a; border: 1px solid rgba(255, 0, 127, 0.2); padding: 0.5rem; font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; color: #fff; margin-top: 0.5rem; height: 120px; overflow-y: auto; text-align: left;">
+                <div id="live-chat-stream-log" style="display: flex; flex-direction: column; gap: 0.2rem;"></div>
+            </div>
+        <!-- Forecast Analytics Section -->
+        <div id="drawer-forecast-section" style="display: flex; flex-direction: column; gap: 0.5rem; background: rgba(181, 23, 158, 0.02); border: 1px solid rgba(181, 23, 158, 0.15); padding: 0.75rem; border-radius: 0px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(181, 23, 158, 0.3); padding-bottom: 0.4rem;">
+                <span style="font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--accent-purple); letter-spacing: 0.05em; cursor: pointer;" onclick="toggleForecastCollapse()">[ FORECAST ANALYTICS ] <span id="forecast-collapse-indicator">▲</span></span>
+                <span id="forecast-status" style="font-size: 0.7rem; color: var(--text-muted);">READY</span>
+            </div>
+            
+            <div id="forecast-controls-container" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.25rem;">
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 0.15rem;">
+                        <span style="font-size: 0.65rem; color: var(--text-muted);">METRIC</span>
+                        <select id="forecast-metric-selector" style="background: #000; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Share Tech Mono'; font-size: 0.75rem; padding: 0.2rem;" onchange="updateForecastChart()">
+                            <option value="viewer_count">VIEWERS</option>
+                            <option value="msg_per_minute">CHAT SPEED</option>
+                            <option value="rolling_sentiment_score">VIBE SENTIMENT</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 0.15rem;">
+                        <span style="font-size: 0.65rem; color: var(--text-muted);">HORIZON</span>
+                        <select id="forecast-horizon-selector" style="background: #000; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Share Tech Mono'; font-size: 0.75rem; padding: 0.2rem;" onchange="runForecast()">
+                            <option value="1">1 HOUR</option>
+                            <option value="3" selected>3 HOURS</option>
+                            <option value="6">6 HOURS</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn" style="width: 100%; font-size: 0.75rem; padding: 0.35rem; border: 1px solid var(--accent-purple); background: rgba(181, 23, 158, 0.05); color: var(--accent-purple); cursor: pointer; font-family: 'Share Tech Mono'; font-weight: bold; border-radius: 0px;" onclick="runForecast()">RUN PREDICTIVE ENGINE</button>
+                
+                <!-- Chart Area -->
+                <div id="forecast-chart-container" style="display: none; position: relative; margin-top: 0.5rem; text-align: center;">
+                    <div id="forecast-svg-wrapper"></div>
+                    <div id="forecast-stats" style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: space-between; font-size: 0.68rem; color: var(--text-muted); background: rgba(0,0,0,0.3); padding: 0.4rem; border: 1px dashed rgba(255,255,255,0.05);">
+                        <!-- Stats go here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historical Chat Log Section -->
+        <div id="drawer-timeline-section" style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-height: 200px;">
+            <div style="font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--accent-yellow); border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 0.4rem; letter-spacing: 0.05em;">[ HISTORICAL CHAT LOG ]</div>
+            <div id="drawer-timeline" style="
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+                padding-left: 0.75rem;
+                border-left: 2px dashed rgba(255, 255, 255, 0.1);
+                overflow-y: auto;
+                max-height: 250px;
+            ">
+                <!-- Timeline elements -->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

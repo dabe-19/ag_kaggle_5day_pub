@@ -1,0 +1,386 @@
+        :root {
+            --bg-color: #0b0713;
+            --panel-bg: #150f24;
+            --neon-blue: #00f0ff;
+            --neon-magenta: #ff007f;
+            --neon-green: #39ff14;
+            --neon-yellow: #fffb00;
+            --text-color: #e2d9f3;
+            --border-glow: 0 0 10px rgba(0, 240, 255, 0.5);
+            --border-glow-magenta: 0 0 10px rgba(255, 0, 127, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Share Tech Mono', monospace;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--neon-magenta);
+            padding-bottom: 15px;
+            box-shadow: 0 4px 10px -5px rgba(255, 0, 127, 0.5);
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--neon-yellow);
+            letter-spacing: 2px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .main-panel, .side-panel {
+            background-color: var(--panel-bg);
+            border: 2px solid var(--neon-blue);
+            padding: 25px;
+            box-shadow: var(--border-glow);
+        }
+
+        .side-panel {
+            border-color: var(--neon-magenta);
+            box-shadow: var(--border-glow-magenta);
+        }
+
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--neon-magenta);
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(255, 0, 127, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .side-panel h2 {
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.8);
+        }
+
+        /* Spotlight Article Styling */
+        .article-title {
+            font-size: 1.8rem;
+            color: var(--neon-yellow);
+            margin-bottom: 10px;
+        }
+
+        .article-meta {
+            font-size: 0.9rem;
+            color: #887a9c;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #3a2b54;
+            padding-bottom: 10px;
+        }
+
+        .article-body {
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .article-body p {
+            margin-bottom: 15px;
+        }
+
+        .article-body h3 {
+            font-size: 1.3rem;
+            color: var(--neon-blue);
+            margin: 25px 0 10px 0;
+            border-left: 3px solid var(--neon-magenta);
+            padding-left: 10px;
+        }
+
+        /* Autocomplete Input Form */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            color: var(--neon-yellow);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background-color: #0b0713;
+            border: 2px solid var(--neon-blue);
+            color: var(--text-color);
+            padding: 10px 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: var(--border-glow);
+        }
+
+        button {
+            background-color: var(--neon-magenta);
+            color: #000;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            text-shadow: none;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #ff3399;
+            box-shadow: var(--border-glow-magenta);
+        }
+
+        /* Autocomplete dropdown */
+        .autocomplete-items {
+            position: absolute;
+            border: 2px solid var(--neon-blue);
+            border-top: none;
+            z-index: 99;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--panel-bg);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #3a2b54;
+        }
+
+        .autocomplete-items div:hover {
+            background-color: #2b1f47;
+            color: var(--neon-blue);
+        }
+
+        /* History items list */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .history-card {
+            border: 1px solid #3a2b54;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .history-card:hover {
+            border-color: var(--neon-magenta);
+            background-color: #1a122e;
+        }
+
+        .history-card h4 {
+            color: var(--neon-yellow);
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .history-card p {
+            font-size: 0.85rem;
+            color: #887a9c;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #887a9c;
+            font-style: italic;
+            padding: 20px 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .back-link:hover {
+            text-shadow: var(--border-glow);
+        }
+
+        /* Social Badges */
+        .social-badge {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.65rem;
+            text-decoration: none;
+            padding: 6px 12px;
+            border: 2px solid;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 5px;
+        }
+
+        .badge-twitch {
+            color: #a970ff;
+            border-color: #a970ff;
+        }
+        .badge-twitch:hover {
+            background-color: rgba(169, 112, 255, 0.1);
+            box-shadow: 0 0 8px rgba(169, 112, 255, 0.5);
+        }
+
+        .badge-youtube {
+            color: #ff0000;
+            border-color: #ff0000;
+        }
+        .badge-youtube:hover {
+            background-color: rgba(255, 0, 0, 0.1);
+            box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+        }
+
+        .badge-store {
+            color: #00f0ff;
+            border-color: #00f0ff;
+        }
+        .badge-store:hover {
+            background-color: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+        }
+
+        .badge-twitter {
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+        .badge-twitter:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Dynamic Streamer Tag Styling for links */
+        #spotlight-body a,
+        .article-body a {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.78rem;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            color: #d8b4fe; /* lighter purple for readability */
+            padding: 0.15rem 0.45rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin: 0.1rem 0.2rem;
+            font-family: 'Share Tech Mono', monospace;
+            vertical-align: middle;
+        }
+
+        #spotlight-body a:hover,
+        .article-body a:hover {
+            background: rgba(168, 85, 247, 0.3);
+            border-color: rgba(168, 85, 247, 0.6);
+            box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+            color: #f3e8ff;
+        }
+
+        #spotlight-body a::before,
+        .article-body a::before {
+            content: "👾 ";
+            margin-right: 0.25rem;
+            font-size: 0.78rem;
+        }
+
+        /* YouTube Links Styling */
+        #spotlight-body a[href*="youtube.com"],
+        .article-body a[href*="youtube.com"],
+        #spotlight-body a[href*="handle=UC" i],
+        .article-body a[href*="handle=UC" i],
+        #spotlight-body a[href*="/expose/UC" i],
+        .article-body a[href*="/expose/UC" i],
+        #spotlight-body a[href*="/spotlight/UC" i],
+        .article-body a[href*="/spotlight/UC" i],
+        #spotlight-body a.youtube-link,
+        .article-body a.youtube-link {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.35);
+            color: #f87171;
+        }
+
+        #spotlight-body a[href*="youtube.com"]:hover,
+        .article-body a[href*="youtube.com"]:hover,
+        #spotlight-body a[href*="handle=UC" i]:hover,
+        .article-body a[href*="handle=UC" i]:hover,
+        #spotlight-body a[href*="/expose/UC" i]:hover,
+        .article-body a[href*="/expose/UC" i]:hover,
+        #spotlight-body a[href*="/spotlight/UC" i]:hover,
+        .article-body a[href*="/spotlight/UC" i]:hover,
+        #spotlight-body a.youtube-link:hover,
+        .article-body a.youtube-link:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.6);
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+        }
+
+        #spotlight-body a[href*="youtube.com"]::before,
+        .article-body a[href*="youtube.com"]::before,
+        #spotlight-body a[href*="handle=UC" i]::before,
+        .article-body a[href*="handle=UC" i]::before,
+        #spotlight-body a[href*="/expose/UC" i]::before,
+        .article-body a[href*="/expose/UC" i]::before,
+        #spotlight-body a[href*="/spotlight/UC" i]::before,
+        .article-body a[href*="/spotlight/UC" i]::before,
+        #spotlight-body a.youtube-link::before,
+        .article-body a.youtube-link::before {
+            content: "🔴 ";
+        }
+
+        @keyframes pulse-border-blue {
+            0%, 100% { border-color: var(--neon-blue); box-shadow: none; }
+            50% { border-color: var(--neon-magenta); box-shadow: 0 0 10px rgba(0, 240, 255, 0.6); }
+        }
+        .generating-pulse {
+            animation: pulse-border-blue 2s infinite ease-in-out;
+        }

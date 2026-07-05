@@ -1,0 +1,22 @@
+.gcloudignore
+.git
+.gitignore
+.venv
+poetry.lock
+.pytest_cache
+.ruff_cache
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Local secrets and configurations
+.env
+deploy.env
+service.yaml
+*.gpg
+*.key
+*.crt
+*.pem
+**/cache.json
+**/youtube_quota_status.json
+**/custom_report.json

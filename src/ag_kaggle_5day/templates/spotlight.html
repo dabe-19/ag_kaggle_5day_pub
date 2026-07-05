@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOR-ACLE: Streamer Spotlight Hub</title>
+    <meta name="description" content="WOR-ACLE: Streamer of the Day Exposes and Community Profiles. Read in-depth analyses of top live content creators.">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/spotlight.css">
+</head>
+<body>
+    <header>
+        <h1>WOR-ACLE</h1>
+        <div class="subtitle">STREAMER SPOTLIGHTS & EXPOSES</div>
+    </header>
+
+    <div class="container">
+        <!-- Main Panel: Streamer of the Day -->
+        <main class="main-panel">
+            <h2 id="spotlight-header">STREAMER OF THE DAY</h2>
+            <div id="expose-content">
+                <div class="article-title" id="spotlight-title">Loading Spotlight Expose...</div>
+                <div class="article-meta" id="spotlight-meta">WOR-ACLE Daily Chronicle</div>
+                <div id="spotlight-links" style="display: none; gap: 10px; margin: 15px 0; flex-wrap: wrap;"></div>
+                <div class="article-body" id="spotlight-body">
+                    <p>Fetching the latest 24-hour long-form expose from the database...</p>
+                </div>
+            </div>
+            <a href="/" class="back-link">&lt;&lt; BACK TO DASHBOARD</a>
+        </main>
+
+        <!-- Side Panel: On-Demand Research & History -->
+        <aside class="side-panel">
+            <h2>RESEARCH AGENT</h2>
+            <div class="form-group">
+                <label for="streamer-search">Generate Profile for Streamer:</label>
+                <div class="input-group">
+                    <input type="text" id="streamer-search" placeholder="Type streamer handle..." autocomplete="off">
+                    <button id="btn-generate">GO</button>
+                </div>
+                <div id="streamer-generating-status" style="display: none; font-size: 0.85rem; color: var(--neon-yellow); margin-top: 8px;"></div>
+                <div id="autocomplete-list" class="autocomplete-items" style="display: none;"></div>
+                <div id="session-research-section" style="margin-top: 1.25rem; display: none;">
+                    <label style="font-size: 0.8rem; color: #887a9c; display: block; margin-bottom: 0.5rem; border-top: 1px dashed #3a2b54; padding-top: 0.75rem;">My Session Research</label>
+                    <div id="session-research-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 120px; overflow-y: auto;">
+                    </div>
+                </div>
+            </div>
+
+            <h2>HISTORICAL EXPOSES</h2>
+            <div id="history-content" class="history-list">
+                <div class="no-data">No history found.</div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="/static/js/spotlight.js"></script>
+</body>
+</html>

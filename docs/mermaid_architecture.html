@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background-color: #0f141c;
+            /* Matches a clean dark mode slate */
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .mermaid {
+            width: 90%;
+            /* Prevents node clipping on outer borders */
+        }
+    </style>
+    <!-- Import Mermaid Library Package -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark', /* Applies native dark mode styling directly to nodes */
+            securityLevel: 'loose'
+        });
+    </script>
+</head>
+
+<body>
+    <div class="mermaid">
+        graph TD
+        %% Global Element Overrides via CSS Injection (Fixes Edge Labels)
+        %% This targets the underlying Mermaid SVG classes for stream-ready sizing
+        %% inlineStyleConfig
+        style App fill:#000000;
+
+        %% Assigning styles directly via standard CSS injections
+        linkStyle default color:yellow,background:purple,font-family:'Courier
+        New',Courier,monospace,font-size:24px,font-weight:bold;
+
+        %% Super-Sized Retro Arcade Style Sheet Definitions (Stream-Optimized)
+        classDef arcadeTitle font-family:'Courier
+        New',Courier,monospace,font-size:40px,font-weight:bold,fill:#000000,stroke:#00FF66,stroke-width:5px,color:#00FF66,padding:25px;
+        classDef arcadeAgent font-family:'Courier
+        New',Courier,monospace,font-size:30px,font-weight:bold,fill:#111122,stroke:#FF00FF,stroke-width:5px,color:#33FFFF,padding:20px;
+        classDef arcadeTool font-family:'Courier
+        New',Courier,monospace,font-size:24px,font-weight:bold,fill:#050505,stroke:#33FFFF,stroke-width:3px,color:#FFFF00,padding:18px;
+        classDef arcadeWorkflow font-family:'Courier
+        New',Courier,monospace,font-size:26px,font-weight:bold,fill:#220033,stroke:#FF0055,stroke-width:4px,color:#FF0055,padding:20px;
+
+        %% Mega Subgraph Titles and Outlines
+        style SubAgents fill:#0a0a1a,stroke:#FF00FF,stroke-width:4px,color:#FF00FF,font-family:'Courier
+        New',monospace,font-size:28px,font-weight:bold
+        style RootTools fill:#0a1a1a,stroke:#00FF66,stroke-width:4px,color:#00FF66,font-family:'Courier
+        New',monospace,font-size:28px,font-weight:bold
+        style PlannerTree fill:#1a0a1a,stroke:#33FFFF,stroke-width:4px,color:#33FFFF,font-family:'Courier
+        New',monospace,font-size:28px,font-weight:bold
+        style ConstellationTree fill:#1a1a0a,stroke:#FFFF00,stroke-width:4px,color:#FFFF00,font-family:'Courier
+        New',monospace,font-size:28px,font-weight:bold
+        style BackgroundWorkflows fill:#1a001a,stroke:#FF0055,stroke-width:4px,color:#FF0055,font-family:'Courier
+        New',monospace,font-size:28px,font-weight:bold
+
+        App["ADK App: streamer_metrics_advisor_app"] --> Root["Root Agent: streamer_metrics_advisor_agent"]
+
+        class App arcadeTitle;
+        class Root arcadeAgent;
+
+        %% ------------------------------------------------------------------------
+        %% SUB-AGENTS LAYER
+        %% ------------------------------------------------------------------------
+        subgraph SubAgents [" [ SELECT CHIP: SUB-AGENTS ] "]
+        direction TB
+        Scout["Sub-Agent: saturation_scout"]
+        Planner["Sub-Agent: strategy_planner"]
+        Constellation["Sub-Agent: constellation_analyst"]
+        Research["Sub-Agent: streamer_research"]
+        Selector["Sub-Agent: expose_selector"]
+        Writer["Sub-Agent: expose_writer"]
+
+        %% Vertical Stacking Layout
+        Scout ~~~ Planner ~~~ Constellation
+        Research ~~~ Selector ~~~ Writer
+        end
+
+        class Scout,Planner,Constellation,Research,Selector,Writer arcadeAgent;
+
+        Root -->|Delegates saturation queries| Scout
+        Root -->|Delegates profile/connection analysis| Planner
+        Root -->|Delegates ecosystem/tribe analysis| Constellation
+        Root -->|Delegates streamer research| Research
+        Root -->|Delegates expose selection| Selector
+        Root -->|Delegates expose writing| Writer
+
+        %% ------------------------------------------------------------------------
+        %% ROOT TOOLS LAYER
+        %% ------------------------------------------------------------------------
+        subgraph RootTools [" [ INVENTORY: ROOT UTILITIES ] "]
+        direction TB
+        T1["get_current_metrics"]
+        T2["get_market_analysis_report"]
+        T3["get_game_specific_advice"]
+        T4["add_custom_game_to_dashboard"]
+        T5["remove_custom_game_from_dashboard"]
+        T6["generate_playbooks_for_current_games"]
+        T7["get_affiliate_gear_recommendation"]
+
+        %% Stacking layout for Root Tools
+        T1 ~~~ T4
+        T2 ~~~ T5
+        T3 ~~~ T6
+        T6 ~~~ T7
+        end
+
+        class T1,T2,T3,T4,T5,T6,T7 arcadeTool;
+
+        Root -->|Tool| T1
+        Root -->|Tool| T2
+        Root -->|Tool| T3
+        Root -->|Tool| T4
+        Root -->|Tool| T5
+        Root -->|Tool| T6
+        Root -->|Tool| T7
+
+        %% ------------------------------------------------------------------------
+        %% SUB-AGENT ATTACHED TOOLS & WORKFLOWS
+        %% ------------------------------------------------------------------------
+
+        %% Scout Tools
+        Scout -->|Tool| S1["get_saturation_data"]
+        class S1 arcadeTool;
+
+        %% Planner Sub-Tree
+        subgraph PlannerTree [" [ SKILL TREE: STRATEGY PLANNER ] "]
+        direction TB
+        P1["get_streamer_comprehensive_dossier"]
+        P2["get_streamer_profile_fabric"]
+        P3["get_similar_streamers"]
+        P4["get_similarity_drift"]
+        P5["get_streamer_correlations"]
+        P6["get_streamer_sentiment_data"]
+        P7["query_streamer_connections"]
+        P8["get_archetype_analytics"]
+        P9["get_game_sentiment_metrics"]
+        P10["get_past_analysis_context"]
+
+        %% Compacting toolsets vertically
+        P1 ~~~ P6
+        P2 ~~~ P7
+        P3 ~~~ P8
+        P4 ~~~ P9
+        P5 ~~~ P10
+        end
+
+        class P1,P2,P3,P4,P5,P6,P7,P8,P9,P10 arcadeTool;
+
+        Planner -->|Tool| P1
+        Planner -->|Tool| P2
+        Planner -->|Tool| P3
+        Planner -->|Tool| P4
+        Planner -->|Tool| P5
+        Planner -->|Tool| P6
+        Planner -->|Tool| P7
+        Planner -->|Tool| P8
+        Planner -->|Tool| P9
+        Planner -->|Tool| P10
+
+        %% Constellation Sub-Tree
+        subgraph ConstellationTree [" [ SKILL TREE: CONSTELLATION ANALYST ] "]
+        direction TB
+        C1["get_ecosystem_overview"]
+        C2["get_tribe_details"]
+        C3["get_bellwether_rankings"]
+        C4["get_streamer_correlations"]
+        C5["get_streamer_comprehensive_dossier"]
+
+        %% Compacting toolsets vertically
+        C1 ~~~ C4
+        C2 ~~~ C5
+        end
+
+        class C1,C2,C3,C4,C5 arcadeTool;
+
+        Constellation -->|Tool| C1
+        Constellation -->|Tool| C2
+        Constellation -->|Tool| C3
+        Constellation -->|Tool| C4
+        Constellation -->|Tool| C5
+
+        %% Deep Workflows
+        subgraph BackgroundWorkflows [" [ LEVEL EXECUTION GRAPHS ] "]
+        CRW["Comparative Report Workflow"]
+        SPW["Stream Playbook Workflow"]
+        end
+
+        class CRW,SPW arcadeWorkflow;
+
+        T2 -->|Executes| CRW
+        T6 -->|Executes| SPW
+    </div>
+</body>
+
+</html>

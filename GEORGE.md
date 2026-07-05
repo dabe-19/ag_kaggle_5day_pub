@@ -1,0 +1,207 @@
+# GEORGE
+
+## Active Board
+- None
+
+## The Map
+- **Core Package**: `src/ag_kaggle_5day/`
+  - **FastAPI Routers**: `src/ag_kaggle_5day/routes/`
+  - **Scraper Subpackage**: `src/ag_kaggle_5day/agents/scraper/`
+  - **Advisor Subpackage**: `src/ag_kaggle_5day/agents/advisor/`
+  - **GCP Storage Subpackage**: `src/ag_kaggle_5day/agents/gcp_storage/`
+  - **HTML Templates**: `src/ag_kaggle_5day/templates/`
+  - **Static Assets (CSS/JS)**: `src/ag_kaggle_5day/static/`
+- **Agents Workflows**: `.agents/workflows/`
+- **Agent Templates**: `.agents/workflow_templates/`
+- **Tests**: `tests/`
+
+## The Rules
+- Always run `poetry run start` to build/run the app.
+- Always run `poetry run pytest` to execute tests.
+- All database/file/auth handling must adhere to secure development practices.
+
+## The Trowel (Completed Milestones)
+- **[2026-07-04]** Shipped final Kaggle write-up word count optimization under 2500 words with corrected introductory workflow/pipeline counts. Trowel applied.
+- **[2026-07-04]** Shipped comparative reports cleanup, expose/spotlight workflows, and vector storage updates in the Kaggle write-up. Trowel applied.
+- **[2026-07-04]** Shipped sub-agents to level-execution graphs connection mapping in agent hierarchy documentation. Trowel applied.
+- **[2026-07-04]** Shipped updated agent tools, workflows, and pipeline count metrics alongside overall architecture flow diagrams. Trowel applied.
+- **[2026-07-04]** Shipped Tribe Matchmaker pipeline layout relocation under the ADK Workflows section in project documentation. Trowel applied.
+- **[2026-07-04]** Shipped Tribe Matchmaker pipeline flow diagrams and detailed architecture mapping in documentation. Trowel applied.
+- **[2026-07-04]** Shipped updated ADK Workflows documentation replacing deprecated Comparative Report references with Spotlight and Expose workflows. Trowel applied.
+- **[2026-07-04]** Shipped offline streamer language detection from Twitch VODs/videos and Firestore profile cache integration. Trowel applied.
+- **[2026-07-04]** Shipped daily key preservation for tribe_alignment_scores in hourly Firestore correlation writes, and 3D coordinate-space constellation links to eliminate connection line popping. Trowel applied.
+- **[2026-07-04]** Shipped Star Map link brightness increases, resize state preservation in Nebula View, and YouTube platform class badges in exposes. Trowel applied.
+- **[2026-07-04]** Shipped YouTube Channel ID (UC...) to friendly display name resolution across the entire Star Map, tooltips, autocompletes, drawer lists, and expose articles. Trowel applied.
+- **[2026-07-04]** Shipped daily expose and spotlight links click interception to prevent page redirection and keep spotlight cabinet active. Trowel applied.
+- **[2026-07-04]** Shipped Category Selector dropdown filter to restore trending games list and playbook category scoping. Trowel applied.
+- **[2026-07-04]** Shipped Tribe Alignment Scores and pulsing SVG constellation link visualizations across the macro and micro-streamer hierarchies. Trowel applied.
+- **[2026-07-04]** Shipped ADK 2.x Gemma-4 model resolution fix in workflow_init.py and prioritized fallback chain order in models.json. Trowel applied.
+- **[2026-07-04]** Shipped Google GenAI SDK Models and Interactions patch with call-alternating load balancing, APIError (429/5xx) retries, immediate 4xx fallback routing, and automatic thought_signature caching/restoration, resolving Gemma 4 BYOK chatbot crashes. Trowel applied.
+- **[2026-07-04]** Shipped high-dimensional offline cohort clustering and starmap nebula point-cloud visualization with local PCA transitions. Trowel applied.
+- **[2026-07-03]** Shipped API key validation credentials and synchronization fixes, and implemented a BYOK local execution bypass for remote advisor recommendations. Trowel applied.
+- **[2026-07-02]** Shipped Twitch-only name-based YouTube drawer false positive fixes, and dynamic NVAR-based auto-clustering / projection of micro-streamers in the Star Map. Trowel applied.
+- **[2026-07-02]** Shipped Vibe Tribe description rendering (Galaxy View tooltips and cluster panel), Vertex fast-fail local execution pre-warm, Uncaught TypeError fixes, and mobile responsive grid styling. Trowel applied.
+- **[2026-07-02]** Shipped star map counts synchronization and Sentinel cohort anchor footnotes explaining coordinates constraints. Trowel applied.
+- **[2026-07-02]** Shipped matchmaker and live-monitor custom analysis model support, honoring the user's selected model preference. Trowel applied.
+- **[2026-07-02]** Shipped settings key state auth syncing, preventing out-of-sync settings drawers from blocking the chatbot. Trowel applied.
+- **[2026-07-02]** Shipped Twitch URL leading @-sign and %40 string formatting bug fixes in dashboard.js. Trowel applied.
+- **[2026-07-02]** Shipped matchmaker default game normalization, replacing Just Chatting with General (No top game registered) and warning Gemini in system instructions. Trowel applied.
+- **[2026-07-02]** Shipped chat sentiment safe_generate_content TypeError signature fix, passing the model parameter in analytics.py. Trowel applied.
+- **[2026-07-02]** Shipped correlation and playbook generation UnboundLocalError fixes, preventing crashes when Firestore/BigQuery resources are empty or freshness check is bypassed. Trowel applied.
+- **[2026-07-02]** Shipped non-fatal playbook generation, catching external Gemini API transient errors (e.g. 500 Server Errors) instead of crashing the job to prevent container retries. Trowel applied.
+- **[2026-07-02]** Shipped parallelized Twitch chat sampling for micro-streamers, using ThreadPoolExecutor to run 180s sampling concurrently and reducing sequential task duration from 15 minutes to 3 minutes. Trowel applied.
+- **[2026-07-02]** Shipped admin endpoint security cleanup, removing sensitive web routes (`/api/admin/*`, `/api/cron/*`, and `/api/articles/expose/trigger`) and migrating task invocations (database seeding, analytics, expose writing) to secure Cloud Run Job CLI arguments. Trowel applied.
+- **[2026-07-02]** Shipped matchmaker BYOK API key enforcement, preventing SSE stream analysis from falling back to the server's internal environment key. Trowel applied.
+- **[2026-07-02]** Shipped YouTube top-20 streamer filtering, allowing viewer metric fetches for all games while filtering out and discarding live YouTube streamers beyond the top-20 limit to prevent candidate runaway. Trowel applied.
+- **[2026-07-02]** Shipped YouTube sentinel active candidate filtering to linked cohort accounts, and ran a pruning utility script deleting 41 unlinked YouTube document entries in Firestore. Trowel applied.
+- **[2026-07-02]** Shipped on-demand profile metadata synchronization and default metrics initialization for empty-history accounts. Trowel applied.
+- **[2026-07-02]** Shipped profile route error handling, starmap display names, micro-streamer schedule-overlap correlation dampening, ruff lint cleaning, and Vertex AI Reasoning Engine test mocks. Trowel applied.
+- **[2026-07-02]** Shipped recursive Double EMA smoothing, self-pair filtering, color-coded acceleration badges, scrollable leaderboard UI, enriched playbook prompts, and 3D Star Map flow animations with touch-friendly focal highlighting and floating HUD. Trowel applied.
+- **[2026-07-02]** Shipped defensive parsing of peer connection details and game sentiment metrics in advisor workflows to resolve playbook generation errors. Trowel applied.
+- **[2026-07-02]** Shipped expansion of key rotation pool to 5 API keys and implemented fallback key rotation on 500 server errors in safe_generate_content. Trowel applied.
+- **[2026-07-02]** Shipped sanitization for game names containing forward slashes to prevent Firestore path element parsing errors on document retrieval. Trowel applied.
+- **[2026-07-02]** Shipped load-balanced Gemma model sequence rotation to distribute request frequency across API keys and models while preserving Gemini Flash quotas. Trowel applied.
+- **[2026-07-02]** Shipped production-stable model fallbacks for sentiment analysis and optimized candidate throughput limits on hourly cron executions. Trowel applied.
+- **[2026-07-02]** Shipped settings schema validation, request background tasks migration, application state dependency injection, and structured JSON logging with custom logger severity levels. Trowel applied.
+- **[2026-07-02]** Shipped starmap navigation fixes, 3D coordinate PCA spread upgrades, on-demand profile synchronization UI, and live chat monitor imports. Trowel applied.
+- **[2026-07-01]** Shipped project-wide strict E501 and F401 style compliance, and resolved critical Firestore index limits, handle sanitization paths, and sentinel UnboundLocalError exceptions. Trowel applied.
+- **[2026-07-01]** Shipped Codebase Modular Refactor splitting app.py into routes/routers, and decomposing scraper, advisor, and storage modules into subpackages while separating static assets and templates. Trowel applied.
+- **[2026-07-01]** Shipped Raid Playbook meta suggestions, copyable squad copypastas, and live profile enrichment fallbacks touching core, scraper, and frontend layers. Trowel applied.
+- **[2026-07-01]** Shipped Expose page grid panel independent heights layout fix touching the frontend-specialist layer. Trowel applied.
+- **[2026-07-01]** Shipped Expose page animated retro diagnostics loader and aligned matchmaker gravity wells to vibe tribe centroids touching core, scraper, storage, and frontend layers. Trowel applied.
+- **[2026-07-01]** Shipped streamer language detection fixes and aligned Vibe Scout chat monitor scrape duration limit to 120 seconds touching core, scraper, storage, and frontend layers. Trowel applied.
+- **[2026-07-01]** Shipped Matchmaker retro text spinners, OFFLINE status indicators, neon-green oscilloscope Sparkline animations, first-time live chat metrics bootstrapping, latest YouTube video/Twitch VOD links, and top streamed games listings touching core, scraper, storage, and frontend layers. Trowel applied.
+- **[2026-07-01]** Shipped dynamic streamer metadata collection, clipper discovery/promotion, language clustering similarity soft-bias, unified scan forms, matchmaker cognitive reasoning, starmap centroid mappings, and interactive radar controls touching core, scraper, storage, advisor, and frontend layers. Trowel applied.
+- **[2026-07-01]** Shipped metrics display error fix for the profile drawer resolving side panel crashes when displaying Twitch-only micro-streamers. Trowel applied.
+- **[2026-07-01]** Shipped fluid auto-scaling grid system for the header banner bar resolving overlapping text and button items on desktop, intermediate, and mobile viewports. Trowel applied.
+- **[2026-07-01]** Shipped live SSE chat crawl telemetry HUD with canvas-based IDR heartbeat sparkline, centralized agent diagnostic loading registry, and import bugfixes touching core, scraper, and frontend layers. Trowel applied.
+- **[2026-07-01]** Shipped story-driven Community Vibe Matchmaker, custom tag bootstrap forms, sub-agent advisor recommendation pipeline, and profile drawer interaction density rate indicators touching core, scraper, storage, and frontend layers. Trowel applied.
+- **[2026-06-30]** Shipped official YouTube Search API channel fallback resolution inside case-preserved self-healing logic to dynamically repair legacy lowercase profiles. Trowel applied.
+- **[2026-06-30]** Shipped case-preservation in profile storage, profile lookup, and BigQuery daily metrics snapshot tasks, and updated frontend drawer state mapping to prevent lowercase handle propagation. Trowel applied.
+- **[2026-06-30]** Shipped direct streamer_account_links lookups in YouTube case-preservation resolver, fixing lowercase-to-propercase channel ID healing. Trowel applied.
+- **[2026-06-30]** Shipped prioritization of YouTube streams tab scraping in metrics collector, resolving active chat stream parsing for Topstep and preventing offline recap stream redirections. Trowel applied.
+- **[2026-06-30]** Shipped fast-path case-preserved YouTube channel ID resolution, robust live stream detection using isLiveBroadcast tags, and optimized profile on-demand metadata regeneration checks touching core, scraper, and storage layers. Trowel applied.
+- **[2026-06-30]** Shipped 3D interactive starmap constellations (Galaxy and Cluster views) with click/drag rotation, pan, zoom, coordinate stretching, and normalized relative zoom perspective scaling, alongside case-preserved YouTube channel ID lookups in database and correlation layers, non-blocking async sentinel execution, real-time YouTube chat monitoring, and SSE chat streaming touching core, scraper, storage, and frontend layers. Trowel applied.
+- **[2026-06-30]** Shipped case-preserved YouTube channel ID resolution, standalone and linked tracking modes for YouTube live sentinels, and optimized daily aggregation candidate selection using BigQuery event count queries. Trowel applied.
+- **[2026-06-30]** Shipped structured JSON comparative reports generation with local HTML template rendering, fixed YouTube channel ID platform drawer detection, and added live Firestore/BigQuery account links mapping logging. Trowel applied.
+- **[2026-06-29]** Shipped zero-quota YouTube live chat telemetry, channel statistics integration, and dual-vibe CRT radar indicators with smoothed history sparklines touching scraper, core, test, and frontend layers. Trowel applied.
+- **[2026-06-29]** Shipped on-demand Ridge regression forecasting models for streamers and Vibe Tribes with dynamic telemetry decay upsampling, 1-hour Firestore caching, dual-layer client/global rate limiters, 5-minute SSE connection timeouts, and collapsible SVG sparklines with shaded 95% confidence interval visualizations touching core, test, and frontend layers. Trowel applied.
+- **[2026-06-29]** Shipped playbook planner prompt enrichment, 12-hour category report caching, dynamic statistical process control triggers, API key check for chat radar, Vibe Tribe naming descriptions, and timeline history log UI drawer touching core, scraper, storage, agent, and frontend layers. Trowel applied.
+- **[2026-06-29]** Shipped YouTube channel URL format correction to inject the required '/channel/' prefix for ID-based profiles generated inside LLM comparative matrices touching the scraper layer. Trowel applied.
+- **[2026-06-29]** Shipped Rolling Sentiment telemetry sparkline visualization with absolute Y-axis scaling, dashed zero-line baselines, and polarity indicator overlays touching the frontend layer. Trowel applied.
+- **[2026-06-29]** Shipped Volatility and Rolling Sentiment database mapping fix in history summary queries, allowing profile sparklines to display historical metrics touching the scraper layer. Trowel applied.
+- **[2026-06-29]** Shipped Live Chat Radar window state persistence on drawer refreshes and bypassed Firestore composite index limits to enable the Highlight Moments timeline touching core and frontend layers. Trowel applied.
+- **[2026-06-29]** Shipped model fallback configuration settings for editorial/refinement chains, prompt enforcement for long-form expose structure preservation, client-side starmap node repulsion collision resolution, and starmap chat console layout width, typography, and scrolling history upgrades touching core, scraper, and frontend layers. Trowel applied.
+- **[2026-06-29]** Shipped Phase IV real-time chat monitoring and Event-Source (SSE) streaming, global Firestore autocomplete suggestions, and Enter-key search submission handlers touching core, scraper, storage, documentation, and frontend layers. Trowel applied.
+- **[2026-06-29]** Shipped Phase III split-pane Star Map visualizer, client-side label collision resolution, offline YouTube name-matching deduplication, and weighted hybrid relationship scores with supportive/opposing breakdowns touching core, scraper, storage, agent, and frontend layers. Trowel applied.
+- **[2026-06-29]** Shipped Phase II ecosystem analytics with Vibe Tribe community clustering, Bellwether centrality rankings, 2D PCA constellations, convergence velocities, and Star Map tab with semantic zoom, starfield warp canvas, and contextual cluster chatbot recommendation integration. Trowel applied.
+- **[2026-06-29]** Shipped project-wide strict E501 line-length compliance formatting, resolved SSL protocol shutdown deallocation warnings on task cancellation, made ADK workflow executions non-blocking using background threads, fixed standalone page query/path routing handle parsing, and redesigned the Community Intel profile drawer buttons. Trowel applied.
+- **[2026-06-29]** Shipped combined streamer profiles, standalone Spotlight/Expose pages, active sentinel covariance calculations, autocomplete drawer search, and CRT flicker transitions touching core, scraper, storage, test, and frontend layers. Trowel applied.
+- **[2026-06-29]** Shipped hourly parallel streamer profile aggregation restricted to the 25 stalest candidates with >= 5 highlight events, and 24h playbook cache in cron refresh touching core, scraper, storage, cron CLI, and test layers. Trowel applied.
+- **[2026-06-29]** Shipped replacement of the static 3.0h stream length metric with real-time concurrent active channel count on game cards across dashboard, scraper, and web layers. Trowel applied.
+- **[2026-06-29]** Shipped Gemini API key round-robin rotation pool across primary, backup, and tertiary keys to prevent sequential 429 rate-limiting blocks and speed up metrics aggregation runs. Trowel applied.
+- **[2026-06-29]** Shipped update to Cloud Run Job deployment script and guide increasing task timeout limits to 45 minutes to prevent task overruns on anomalous runs. Trowel applied.
+- **[2026-06-29]** Shipped fix for client-side live status detection using the correct cachedGamesList variable scope, and fixed historical timeseries sparklines dropping to zero by carrying forward cached metrics on trigger-based Firestore updates. Trowel applied.
+- **[2026-06-29]** Shipped fix for streamer profile drawer styling, removing the position relative override to restore sliding sidepanel fixed positioning on the webpage viewport. Trowel applied.
+- **[2026-06-29]** Shipped news articles prefetching throttling (max 8 oldest games per hour) and increased staleness cache threshold (12 hours) to prevent task over-runs touching agent layers. Trowel applied.
+- **[2026-06-29]** Shipped fix for daily analytics aggregation check hijacking, decoupling freshness checks from hourly-updated streamer profiles using a dedicated status cache. Trowel applied.
+- **[2026-06-28]** Shipped streamer historical telemetry sparklines displaying viewership, chat speed, and volatility trends in the profile card side drawer touching core and frontend layers. Trowel applied.
+- **[2026-06-28]** Shipped streamer card HMI visual adjustments with circular CRT radar target, live status search priority correction, comparative report link click interception, and iframe frame-busting security protections touching agent and frontend layers. Trowel applied.
+- **[2026-06-28]** Shipped BigQuery covariance query compatibility, multi-key sequential fallback sequence for rate-limits, automated Cloud Run Job deploy configurations, and moment chat snippet triggers logging touching core, scraper, storage, cron, and deployment layers. Trowel applied.
+- **[2026-06-28]** Shipped adaptive streamer metrics continuous-time lag filter, on-the-fly exponential decay evaluation, hourly correlation matrix calculations, BigQuery history logging, and frontend connections drawer UI touching core, scraper, storage, agent, cron, and frontend layers. Trowel applied.
+- **[2026-06-28]** Shipped hourly cron performance optimizations and Active Listening metadata bypass on shutdown to prevent Cloud Run job timeouts touching core, scraper, storage, and cron CLI layers. Trowel applied.
+- **[2026-06-28]** Shipped keyless Steam player metrics, Twitch clips velocity tracking, Helix category tags, Three-Tier Cohort sentinel candidate selection, and optimized Dockerfile build caching layers touching core, scraper, storage, and frontend layers. Trowel applied.
+- **[2026-06-28]** Shipped sharded background IRC RaidSentinel monitoring, continuous sentiment volatility mapping, dynamic highlight anomalies/raids triggering, and an interactive retro-styled side profile drawer UI touching core, scraper, storage, cron CLI, and frontend layers. Trowel applied.
+- **[2026-06-27]** Shipped LLM-synthesized composite chat summaries inside daily analytics pipeline and updated Firestore and BigQuery schemas with auto-migrations. Trowel applied.
+- **[2026-06-27]** Shipped optimized comparative analytics report generation limiting trending games pool to 15 per category resolving cron job timeouts. Trowel applied.
+- **[2026-06-27]** Shipped automatic fallback cascade to default category/overall reports on custom games comparative cache misses resolving empty dashboard states for out-of-sync local storage. Trowel applied.
+- **[2026-06-27]** Shipped parameterized deployment templates (service.yaml.template, deploy.env.template), git-ignored active configurations, dynamic manifest generation in deploy_wizard.sh, and dynamic Vertex Reasoning Engine path resolution in app.py. Trowel applied.
+- **[2026-06-27]** Shipped secure session cookie visitor_id tracking, HMAC-SHA256 session key hashing, decoupled custom games cache from hourly cron refresh, hybrid comparison report cache pointers, and BigQuery user activity logging touching core, agent, scraper, storage, and test layers. Trowel applied.
+- **[2026-06-26]** Shipped responsive header wrapping layout, query-specific custom report caching via Firestore, and optimized Spotlight cabinet layout touching core, agent, and frontend layers. Trowel applied.
+- **[2026-06-26]** Shipped header centering flexbox layout, capitalized tier badge text labels, and simplified Strategy column header touching frontend, agent, and test layers. Trowel applied.
+- **[2026-06-26]** Shipped dedicated strategy planner sub-agent, composite dossier aggregation, daily expose/medium-form dossier prompt injections, and successful reference streamer metric lookup during playbook generation. Trowel applied.
+- **[2026-06-26]** Shipped interactive deployment wizard script (deploy_wizard.sh) automating app/nginx container builds, Cloud Run service deployments, cron updates, and Vertex AI Reasoning Engine agent uploads. Trowel applied.
+- **[2026-06-26]** Shipped dynamic streamer similarity tracking engine (NVAR) with BigQuery logging (streamer_similarity_history) and registered similar streamer and drift analysis tools with the chatbot agent. Trowel applied.
+- **[2026-06-26]** Shipped session secret persistence and dynamic secure cookie configuration resolving decryption errors on reloads and multi-worker boots touching core and test layers. Trowel applied.
+- **[2026-06-26]** Shipped daily analytics profile fabric aggregation and dual-section spotlight exposes matching streamer archetypes and connections touching core, agent, scraper, storage, cron CLI, and test layers. Trowel applied.
+- **[2026-06-26]** Shipped secure client-side API key isolation using backend-encrypted HttpOnly session cookies and storage logic refactoring touching core, frontend, and test layers. Trowel applied.
+- **[2026-06-26]** Shipped rendering fix for Playbook Planner page by correcting unclosed form-group HTML div tag in dashboard.html. Trowel applied.
+- **[2026-06-26]** Shipped optimized Chat Summarizer subagent using Gemma 4 models (gemma-4-31b-it/gemma-4-26b-a4b-it) and updated all documentation surfaces. Trowel applied.
+- **[2026-06-26]** Shipped enriched sentiment database schema (Firestore & BigQuery), automatic BigQuery schema upgrades, dynamic Twitch Helix metadata lookups, and concurrent parallel chat sampling. Trowel applied.
+- **[2026-06-26]** Shipped Twitch chat deduplication, subagent-based LLM chat summarization, and Firestore storage indexing for transcripts and summaries. Trowel applied.
+- **[2026-06-25]** Shipped live streamer chat sentiment tracking, editor-refinement workflows, and dynamic backup API key fallbacks touching core, scraper, and test layers. Trowel applied.
+- **[2026-06-25]** Shipped Streamer Profiling & Content Generation Hub with on-demand medium-form generating and daily long-form exposes touching core, scraper, and frontend layers. Trowel applied.
+- **[2026-06-25]** Shipped dynamic Firestore cache reloading on stale hits to prevent displaying outdated metrics on Cloud Run web containers touching core and agent layers. Trowel applied.
+- **[2026-06-25]** Shipped sequential invisible affiliate playbook generation, standardized card aesthetics, resolved remote Reasoning Engine import paths, and fixed test runner isolation touching core, scraper, and test layers. Trowel applied.
+- **[2026-06-25]** Shipped test environment isolation and global GCP mocks to prevent local test runs from polluting or overwriting the production cache touching test and core layers. Trowel applied.
+- **[2026-06-25]** Shipped client-level timeout configuration, dynamic SDK-level timeout enforcement, and automated GCP integration test suite touching core, agent, and test layers. Trowel applied.
+- **[2026-06-24]** Shipped CLI cron-refresh task and docs/tests to support hourly Cloud Run Jobs migration and resolved comparison report rate limits touching core, test, and documentation layers. Trowel applied.
+- **[2026-06-21]** Shipped Cloud Run idle cache protection, concurrency locking, and test mock fixes touching core and scraper layers. Trowel applied.
+- **[2026-06-20]** Shipped in-memory cache lookup fallback for last-known YouTube metrics to bypass high-latency BigQuery queries on startup touching scraper and deployment layers. Trowel applied.
+- **[2026-06-20]** Shipped deployment version nonce stamp, last-updated freshness timestamps on game cards, and environment file packaging configuration touching core, scraper, and frontend layers. Trowel applied.
+- **[2026-06-20]** Shipped sponsored tier alignment, custom game persistence across server restarts, and unit test filesystem isolation touching scraper and test layers. Trowel applied.
+- **[2026-06-20]** Shipped Gemma 4 Google Search grounding integration and migrated affiliate playbooks to Gemma 4 touching agent and scraper layers. Trowel applied.
+- **[2026-06-20]** Shipped comparative report polling rate limit fix, dynamic search-grounded affiliate playbooks with fallback retries, cached category change loading, and error retry button touching core, agent, and frontend layers. Trowel applied.
+- **[2026-06-20]** Shipped Firestore startup cache restoration, custom game metric synchronization, target context playbook generation, and affiliate playbook grid deduplication touching core, agent, and frontend layers. Trowel applied.
+- **[2026-06-20]** Shipped YouTube top live streamers collection, persistent local/BigQuery caching fallbacks, and front-end theme rendering touching scraper and frontend layers. Trowel applied.
+- **[2026-06-20]** Shipped Cloud Run lifespan background scheduler bypass, Gemma-only fallback routing, dynamic search grounding restriction, optimized news pre-fetching count, and Firestore news cache sync touching core and scraper layers. Trowel applied.
+- **[2026-06-20]** Shipped custom scraping race-condition sequential chaining and pleasant failure UI news-shuffling fallbacks touching core and frontend layers. Trowel applied.
+- **[2026-06-20]** Shipped category-specific comparative report trending game dataset padding and client-side category selection persistence touching agent and frontend layers. Trowel applied.
+- **[2026-06-20]** Shipped direct full-screen retro arcade chatbot overlay toggle and constrained message history flex layout scroll fixes touching frontend layer. Trowel applied.
+- **[2026-06-20]** Shipped Cloud Run Secret Manager GEMINI_API_KEY integration, keyless read-only dashboard landing bypass, restricted chatbot/playbook custom generations, and featured affiliate playbook auto-display touching core, agent, and frontend layers. Trowel applied.
+- **[2026-06-20]** Shipped stateless Firestore custom report caching, background scheduler overwrite protection, detailed Gemini prompt/response logging, and fast API key validation aborts touching core and agent layers. Trowel applied.
+- **[2026-06-20]** Shipped unified 15-slot game grid layout, playbook genre-specific preparation advice, and feature-flagged affiliate products showcase touching core, agent, and frontend layers. Trowel applied.
+- **[2026-06-20]** Shipped comparative report key caching recreation, button cooldown labels and default durations, chatbot container reparenting restoration, and ruff format/import-sorting compliance while mocking test API calls touching core, agent, and frontend layers. Trowel applied.
+- **[2026-06-20]** Shipped automatic Firestore cache seeding at startup and manual seeding admin endpoint with authorization verification touching core and scraper layers. Trowel applied.
+- **[2026-06-20]** Resolved all 14 ruff check linting and formatting errors across core FastAPI application logic and test suites touching core-specialist layer. Trowel applied.
+- **[2026-06-20]** Shipped full-screen retro neon arcade cabinet chatbot overlay with CRT scanline effects, sliding side panel preview, edge tab, and three-state UI machine replacing the old floating sidebar drawer touching frontend-specialist layer. Trowel applied.
+- **[2026-06-19]** Shipped categorical report dropdown category change loading recovery and client/server-side rate limiting on metrics collection, chatbot, playbook planner, and news endpoints touching core, agent, and frontend layers. Trowel applied.
+- **[2026-06-19]** Shipped out-of-memory Firestore startup cache recovery, rebranded logo to WOR-ACLE, softened neon contrast, and fixed generated report flickers touching core, scraper, and frontend layers. Trowel applied.
+- **[2026-06-19]** Shipped selectable stream goals, local timestamped playbooks with live metrics/news Firestore snapshots, auto-provisioned BigQuery views, and frontend-specialist agent touching core, scraper, storage, and frontend layers. Trowel applied.
+- **[2026-06-19]** Shipped collapsible retro-arcade chatbot sidebar drawer, backend reasoning thinking/planning output sanitization, and global dark arcade cabinet visual style theme overhaul touching core-specialist layer. Trowel applied.
+- **[2026-06-19]** Shipped top 100 trending games pool, auto-categorization heuristics, BigQuery-backed 24h sparklines, and YouTube recovery fallbacks. Trowel applied.
+- **[2026-06-19]** Shipped non-blocking comparative report background processing, updated dashboard to filter by game-specific genres, and resolved Firestore filter UserWarning. Trowel applied.
+- **[2026-06-19]** Shipped UI dashboard improvements supporting top 10 categories, optional client-side categorical filtering, and rotating sponsored games. Trowel applied.
+- **[2026-06-19]** Integrated remote Vertex AI Reasoning Engine agent client into FastAPI route handlers with local fallback and BYOK compliance. Trowel applied.
+- **[2026-06-19]** Deployed Streamer Metrics Advisor Agent to Vertex AI Agent Runtime (Reasoning Engine) in the kaggle-webapp project. Trowel applied.
+- **[2026-06-19]** Shipped Twitch category filtering, Top 10 trending games expansion, live streamers collection and BigQuery integration, and rebranded Staples to Sponsored with XSS sanitization mitigations. Trowel applied.
+- **[2026-06-19]** Shipped Google ADK workflow graphs for comparative report generation and stream playbook generation/upload, incorporating parallel execution and model fallback logic. Trowel applied.
+- **[2026-06-19]** Resolved all E501 line length and PEP 8 format errors across app, scraper, and test layers, and automated the agent pipeline transition loop. Trowel applied.
+- **[2026-06-18]** Shipped ADK Agent Chatbot Dashboard Integration and Syncing allowing chatbot commands to dynamically trigger metrics updates and comparison report generation touching core-specialist and scraper-agent-specialist layers. Trowel applied.
+- **[2026-06-16]** Shipped Stream Playbook Planner & Curation Hub with Local Board Persistence and Architectural Vision touching core-specialist and scraper-agent-specialist layers. Trowel applied.
+- **[2026-06-16]** Shipped dynamic model/staple configuration loading and complete comparative matrix rows targeting core-specialist and scraper-agent-specialist layers. Trowel applied.
+- **[2026-06-15]** Shipped Twitch/YouTube split metrics injection and Gemma-4 optimized prompt strategy configurations touching core-specialist and scraper-agent-specialist layers. Trowel applied.
+- **[2026-06-15]** Shipped non-blocking parallel cache warming and decoupled Twitch/YouTube client architectures touching core-specialist and scraper-agent-specialist layers. Trowel applied.
+- **[2026-06-15]** Shipped YouTube API rate limit recovery and model selection defaults touching core-specialist and scraper-agent-specialist layers. Trowel applied.
+- **[2026-06-15]** Shipped Bring-Your-Own-Key security architecture, activation landing UI, and session cache logic touching core-specialist and scraper-agent-specialist layers. Trowel applied.
+- **[2026-06-15]** Multi-agent team bootstrapped. Trowel applied.
+- **[2026-06-15]** Shipped live trending discovery + hourly server-side cache: `scraper.py` gains `discover_top5_games()` and `scrape_viewership_for_games()`; `advisor.py` gains `_HourlyCacheStore` singleton and `refresh_hourly_cache()` scheduler; `app.py` gains lifespan-managed background refresh timer and `/api/cache/status`; `dashboard.py` gains tier badges (🔥/📌/🎯), cache freshness indicator, and cached comparison report with custom addendum; 13/13 tests pass. Trowel applied.
+- **[2026-06-15]** Shipped real viewership data pipeline: retired TwitchTracker scraper and all random simulation; introduced `TwitchAPIClient` (Helix API, real concurrent viewers via client credentials flow) and `YouTubeAPIClient` (Data API v3, real `concurrentViewers`); added `data_quality` field (`"live"` | `"estimated"` | `"no_live_data"`) to all game dicts; added `filelock` on `cache.json` writes; updated `advisor.py`, `app.py`, `dashboard.py` (data quality badges), `STYLE_GUIDE.md`, and `docs/data_pipeline.md`; 13/13 tests pass. Trowel applied.
+- **[2026-06-15]** Shipped Docker + nginx HTTPS proxy infrastructure: `Dockerfile` (multi-stage, non-root, python:3.14-slim, pip/PEP-517 build), `docker-compose.yml` (local dev HTTPS self-signed), `docker-compose.cloudrun.yml` (Cloud Run nginx sidecar), `docker/nginx/nginx.local.conf` (TLS 1.2/1.3, HSTS, HTTP→HTTPS redirect), `docker/nginx/nginx.cloudrun.conf` (port 8080, localhost sidecar), `scripts/gen_certs.sh` (idempotent SAN cert generator), `.dockerignore`; verified `docker compose up` → nginx Healthy → `curl -sk https://localhost/api/cache/status` returns JSON; 24/24 tests pass. George finding: Twitch Client Credentials flow requires no redirect URL — `http://localhost` is valid placeholder for app registration. Trowel applied.
+
+## Agents
+This project utilizes a Lodge-style multi-agent team layout for development, alongside specialized production runtime sub-agents:
+
+### Canonical Core (Development Team)
+- **the-architect** ([the-architect.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/the-architect.agent.md)): Entry-point planner that designs feature contracts.
+- **dispatcher** ([dispatcher.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/dispatcher.agent.md)): Orchestrates handoffs across the pipeline in a fixed order.
+- **quartermaster** ([quartermaster.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/quartermaster.agent.md)): Manages dependencies, packages, env variables, and libraries.
+- **tester** ([tester.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/tester.agent.md)): Runs end-to-end integration and verification suites.
+- **george** ([george.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/george.agent.md)): Senior technical auditor overseeing security/style results.
+- **the-tyler** ([the-tyler.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/the-tyler.agent.md)): Security auditor (cross-cutting).
+- **the-warden** ([the-warden.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/the-warden.agent.md)): Style checker and reviewer (cross-cutting).
+- **the-chronicler** ([the-chronicler.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/the-chronicler.agent.md)): Documentation steward.
+- **git-manager** ([git-manager.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/git-manager.agent.md)): Stages, commits, and pushes branch updates.
+- **trowel** ([trowel.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/trowel.agent.md)): Terminal node closing the feedback loop.
+
+### Project-Specific Specialists (Development Team)
+- **core-specialist** ([core-specialist.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/core-specialist.agent.md)): Handles core package code under `src/ag_kaggle_5day/`.
+- **scraper-agent-specialist** ([scraper-agent-specialist.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/scraper-agent-specialist.agent.md)): Implements and updates YouTube/Twitch scrapers and embedded query agents under `src/ag_kaggle_5day/agents/`.
+- **frontend-specialist** ([frontend-specialist.agent.md](file:///home/dabe/projects/ag_kaggle_5day/.agents/workflows/frontend-specialist.agent.md)): Manages frontend HTML layouts, CSS styling, interactive charts, and client-side JavaScript under `src/ag_kaggle_5day/dashboard.html`.
+
+### Production Runtime Sub-Agents
+- **Saturation Scout**: Evaluates live Twitch Helix stream data to compute viewer-to-streamer competition ratios.
+- **Chat Summarizer**: Analyzes deduplicated Twitch live chat transcripts to generate one-sentence sentiment and vibe summaries.
+- **Strategy Planner**: Orchestrates complex multi-tool database and drift research queries on behalf of the chatbot agent.
+- **RaidSentinel**: A sharded background IRC sentinel that monitors up to 100 channels concurrently for incoming raids, velocity spikes, and polarization shifts, calculating rolling sentiment/volatility coordinates and triggering real-time moment highlights.
+- **Constellation Analyst**: Analyzes ecosystem-level network topology, Vibe Tribe community structures, bellwether influence centrality rankings, 2D PCA constellations, and channel convergence/divergence velocity signals.

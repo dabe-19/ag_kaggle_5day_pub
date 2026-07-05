@@ -1,0 +1,69 @@
+# .dockerignore — keeps the build context lean and fast
+# Only files needed to build and run the application are sent to the Docker daemon.
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+tests/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# Local secrets — never bake into the image
+.env
+deploy.env
+service.yaml
+
+# Docker files themselves (not needed inside the image)
+docker/certs/
+docker/nginx/nginx.local.conf
+docker-compose*.yml
+
+# Docs and scripts (not needed at runtime)
+docs/
+scripts/
+notebooks/
+memories/
+.agents/
+
+# Logs
+logs/
+*.log
+
+# Key material
+*.gpg
+*.key
+*.crt
+*.pem
+
+# Runtime cache files — never bake into the image
+**/cache.json
+**/cache.json.lock
+**/news_cache.md
+**/news_cache.md.lock
+**/custom_report.json
+**/custom_report.json.lock
+**/youtube_quota_status.json
+**/youtube_quota_status.json.lock

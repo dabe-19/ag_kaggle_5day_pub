@@ -1,0 +1,61 @@
+# docker-compose.yml — Local development with HTTPS via self-signed certificate
+#
+# Prerequisites:
+#   1. Run `./scripts/gen_certs.sh` once to create docker/certs/nginx.crt and nginx.key
+#   2. Copy .env.example → .env and fill in your API keys
+#
+# Usage:
+#   docker compose up --build         # start everything (builds the app image first)
+#   docker compose up -d --build      # detached
+#   docker compose down               # stop and remove containers
+#   docker compose logs -f nginx      # tail nginx logs
+#
+# Access:
+#   https://localhost  (accept the self-signed cert warning in your browser once)
+#   http://localhost   automatically redirects to https://localhost
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: streamer-advisor:local
+    container_name: streamer_advisor_app
+    env_file: .env
+    # "expose" makes port 8000 reachable within the Docker network only
+    # (not published to the host — nginx is the only public entry point)
+    expose:
+      - "8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/cache/status')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: streamer_advisor_nginx
+    ports:
+      - "80:80"    # HTTP → HTTPS redirect
+      - "443:443"  # HTTPS (self-signed TLS)
+    volumes:
+      - ./docker/nginx/nginx.local.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/certs:/etc/nginx/certs:ro
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      # 1450 is the standard safe MTU for WSL2+Docker bridge networks.
+      # It leaves 50 bytes of headroom for WSL2 tunnel overhead while
+      # allowing full-size HTTPS response payloads (was 1280, which caused
+      # large Gemini API responses to be fragmented and dropped, surfacing
+      # as [Errno 101] Network is unreachable / ConnectError / ReadTimeout).
+      com.docker.network.driver.mtu: "1450"

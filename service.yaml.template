@@ -1,0 +1,113 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+    run.googleapis.com/ingress: all
+    run.googleapis.com/ingress-status: all
+    run.googleapis.com/maxScale: '3'
+    run.googleapis.com/urls: '["https://streamer-advisor-${GCP_PROJECT_NUMBER}.${REGION}.run.app"]'
+  labels:
+    cloud.googleapis.com/location: ${REGION}
+  name: streamer-advisor
+  namespace: '${GCP_PROJECT_NUMBER}'
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '3'
+        run.googleapis.com/client-name: gcloud
+        run.googleapis.com/client-version: 572.0.0
+        run.googleapis.com/startup-cpu-boost: 'true'
+        run.googleapis.com/container-dependencies: '{"nginx":["app"]}'
+      labels:
+        client.knative.dev/nonce: ${DEPLOY_NONCE}
+        run.googleapis.com/startupProbeType: Default
+    spec:
+      containerConcurrency: 80
+      serviceAccountName: streamer-app-sa@${GCP_PROJECT}.iam.gserviceaccount.com
+      containers:
+      - env:
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: gemini-api-key
+              key: latest
+        - name: GEMINI_API_KEY_BACKUP
+          valueFrom:
+            secretKeyRef:
+              name: gemini-api-key-backup
+              key: latest
+        - name: GEMINI_API_KEY_TERTIARY
+          valueFrom:
+            secretKeyRef:
+              name: gemini-api-key-tertiary
+              key: latest
+        - name: GEMINI_API_KEY_QUATERNARY
+          valueFrom:
+            secretKeyRef:
+              name: gemini-api-key-quaternary
+              key: latest
+        - name: GEMINI_API_KEY_QUINARY
+          valueFrom:
+            secretKeyRef:
+              name: gemini-api-key-quinary
+              key: latest
+        - name: DEPLOY_NONCE
+          value: '${DEPLOY_NONCE}'
+        - name: PYTHONUNBUFFERED
+          value: '1'
+        - name: DOCS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: docs-username
+              key: latest
+        - name: DOCS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: docs-password
+              key: latest
+        - name: TWITCH_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: twitch-client-secret
+              key: latest
+        - name: TWITCH_CLIENT_ID
+          value: '${TWITCH_CLIENT_ID}'
+        - name: YOUTUBE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: youtube-api-key
+              key: latest
+        - name: VERTEX_REASONING_ENGINE_PATH
+          value: '${VERTEX_REASONING_ENGINE_PATH}'
+        image: ${REGION}-docker.pkg.dev/${GCP_PROJECT}/streamer-advisor-repo/app:latest
+        name: app
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+        startupProbe:
+          failureThreshold: 3
+          periodSeconds: 10
+          tcpSocket:
+            port: 8000
+          timeoutSeconds: 5
+      - image: ${REGION}-docker.pkg.dev/${GCP_PROJECT}/streamer-advisor-repo/nginx:latest
+        name: nginx
+        ports:
+        - containerPort: 8080
+          name: http1
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 128Mi
+        startupProbe:
+          failureThreshold: 1
+          periodSeconds: 240
+          tcpSocket:
+            port: 8080
+          timeoutSeconds: 240
+      timeoutSeconds: 300
+  traffic:
+  - latestRevision: true
+    percent: 100

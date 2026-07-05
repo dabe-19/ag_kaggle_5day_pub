@@ -1,0 +1,53 @@
+<h3>Overview</h3>
+<p style="line-height: 1.6; margin-bottom: 2rem; color: var(--text-main); font-size: 0.95rem;">
+{{ overview }}
+</p>
+<h3>Comparative Matrix</h3>
+<table class="comparison-table" style="width: 100%; border-collapse: collapse; margin-bottom: 2.5rem;">
+<thead>
+<tr>
+<th>Game</th>
+<th>Tier</th>
+<th>Twitch Viewers</th>
+<th>YouTube Viewers</th>
+<th>Top Streamers</th>
+<th>Score</th>
+<th>Strategy</th>
+</tr>
+</thead>
+<tbody>
+{% for g in games %}
+<tr>
+    <td><strong>{{ g.title }}</strong></td>
+    <td><span class="{{ g.badge_cls }}">{{ g.tier.upper() }}</span></td>
+    <td>{{ "{:,}".format(g.twitch_viewers) if g.twitch_viewers is not none else 0 }}</td>
+    <td>{{ "{:,}".format(g.youtube_viewers) if g.youtube_viewers is not none else 0 }}</td>
+    <td>{{ g.streamers_links | safe }}</td>
+    <td><strong>{{ g.score }}</strong></td>
+    <td><em>{{ g.strategy_text }}</em></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+<h3>Recommendations & Strategy</h3>
+<div class="recommendations-grid">
+{% for card in cards %}
+<div class="recommendation-card">
+    <div class="recommendation-title">{{ card.title }}</div>
+    {% if card.disclaimer %}
+    <p style="font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-top: 0.25rem;">
+        ⚠️ Sponsored Ad: This game is sponsored. Content creators may receive promotional perks.
+    </p>
+    {% endif %}
+    <div><span class="pro-badge">Pro</span> {{ card.pro }}</div>
+    <div><span class="con-badge">Con</span> {{ card.con }}</div>
+    <div class="plan-block"><strong>Advice & Strategy:</strong> {{ card.advice }}</div>
+</div>
+{% endfor %}
+</div>
+<h3>Hidden Gem Recommendation</h3>
+<div class="hidden-gem-card">
+    <div class="hidden-gem-title">✨ {{ gem.title }}</div>
+    <div class="hidden-gem-reason"><strong>Opportunity:</strong> {{ gem.opportunity }}</div>
+    <div class="hidden-gem-plan"><strong>Stream Strategy:</strong> {{ gem.strategy }}</div>
+</div>
